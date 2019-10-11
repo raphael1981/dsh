@@ -1,0 +1,396 @@
+<button
+        class="btn btn-danger btn-lg btn-save-update"
+        ng-click="totalSaveStrukture()"
+>
+    <i class="fa fa-floppy-o" aria-hidden="true"></i> Zapisz
+</button>
+<div class="loading" ng-class="loading" ng-init="loading='hidden'">
+    <img src="/images/loading.svg" style="width: 100px">
+</div>
+
+<div
+        class="row"
+        ng-init="initData()"
+>
+
+    <div class="col-xs-12 col-sm-12 col-md-12">
+        <div
+                class="row"
+        >
+            <div class="col-xs-12 col-sm-12 col-md-12">
+
+                <div class="row">
+                    <div class="col-xs-12 col-sm-4">
+                        <a href="#!/new/leadscene" class="lead-s-link">
+                            <i class="fa fa-plus-square" aria-hidden="true"></i> Utwórz nową scenę
+                        </a>
+                    </div>
+                    <div class="col-xs-12 col-sm-4">
+                        <a href="#!/current/leadscene" class="lead-s-link">
+                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edytuj aktualną scenę
+                        </a>
+                    </div>
+                    <div class="col-xs-12 col-sm-4">
+                        <a href="#!/list/leadscenes" class="lead-s-link">
+                            <i class="fa fa-list-ul" aria-hidden="true"></i> Lista scen
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-12 col-md-12">
+        <hr>
+    </div>
+
+    <div class="col-xs-12 col-sm-12">
+        <div class="row">
+
+            <div class="col-xs-12 col-sm-12 col-md-6">
+                <form class="form-inline" ng-submit="addStructure()">
+                    <div class="form-group">
+                        <label for="structure">Wybierz układ:</label>
+                        <select class="form-control" id="structure"
+                                ng-options="option.name for option in lead_select track by option.colclass"
+                                ng-model="add_data_structure"></select>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary">Dodaj układ</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-6">
+                <form class="form-inline">
+                    <div class="form-group">
+                        <label for="structure">Nazwa szablonu:</label>
+                        <input
+                            id="structure_name"
+                            name="structure_name"
+                            type="text"
+                            ng-model="structure_name"
+                            placeholder="Nazwa szablonu"
+                            class="form-control input-md"
+                            >
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="col-xs-12 col-sm-12">
+
+
+        <div class="row" ui-sortable ng-model="lead_data">
+            <div
+                    class="col-xs-12 col-sm-12 col-sort-view"
+                    ng-repeat="item in lead_data"
+                    ng-init="types[$index]=[]"
+                    class="item"
+            >
+
+                <div class="element-in-lead">
+
+                    <div class="row">
+
+                        <div class="col-xs-12 col-sm-12">
+                            <button
+                                    class="btn btn-danger btn-sm"
+                                    ng-click="removeElemnetFromStructure($index)"
+                            >
+                                <i class="fa fa-times" aria-hidden="true"></i>
+                            </button>
+                            <hr>
+                        </div>
+                        <div ui-sortable ng-model="item[0].value">
+                        <div
+                                class="col-xs-12 col-sm-12 [[ $parent.item[0].colclass ]]"
+                                ng-repeat="element in item[0].value"
+
+                        >
+
+
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-12">
+
+                                    <form class="form-inline">
+                                        <div class="form-group">
+                                            <select class="form-control" id=""
+                                                    ng-options="option.name for option in element.showtype track by option.key"
+                                                    ng-model="types[$parent.$index][$index]"
+                                                    ng-init="types[$parent.$index][$index]=$parent.item[0].value[0].showtype[0]"
+                                            ></select>
+                                        </div>
+
+
+                                        <div class="form-group">
+
+                                            <button
+                                                    type="button"
+                                                    class="btn btn-default btn-sm"
+                                                    ng-click="openConfigCloud($index, types[$parent.$index][$index], element, $parent.item[0].findkey)"
+                                            >
+                                                Konfiguruj element
+                                            </button>
+                                        </div>
+                                    </form>
+
+
+                                    <div ng-if="element.current_type=='agenda' && element.data.entity_data!=null">
+
+                                        <div class="view-lead-element-content">
+                                            <div ng-if="element.data.entity_data.image!=null">
+                                                    <img
+                                                            src="/image/[[ element.data.entity_data.image ]]/[[ element.data.entity_data.disk ]]/[[ element.data.entity_data.image_path ]]/400"
+                                                            class="img-responsive"
+                                                    >
+                                            </div>
+                                            <div ng-if="element.data.entity_data.image==null">
+                                                    <div class="box-for-icon" style="background: #[[ element.data.entity_data.categories[0].params.color ]];">
+                                                        <img src="[[ element.data.entity_data.categories[0].params.icon ]]" class="img-responsive">
+                                                    </div>
+                                            </div>
+                                            <h4>
+                                                [[ element.data.entity_data.title ]]
+                                            </h4>
+                                            <i class="data">
+                                                [[ element.data.entity_data.begin ]] - [[ element.data.entity_data.end ]]
+                                            </i>
+                                            <div class="intro">
+                                                [[ element.data.entity_data.intro ]]
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div ng-if="element.current_type=='content' && element.data.entity_data!=null">
+
+                                        <div class="view-lead-element-content">
+                                            <div class="img-show" ng-if="element.data.entity_data.image!=null">
+                                                <img
+                                                        src="/image/[[ element.data.entity_data.image ]]/[[ element.data.entity_data.disk ]]/[[ element.data.entity_data.image_path ]]/400"
+                                                        class="img-responsive"
+                                                >
+                                            </div>
+                                            <h4>
+                                                [[ element.data.entity_data.title ]]
+                                            </h4>
+                                            <div class="intro">
+                                                [[ element.data.entity_data.intro ]]
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+                                    <div ng-if="element.current_type=='only_youtube' && element.data.youtube_id!=null">
+
+                                        <div class="view-lead-element-content">
+                                            <div id="showYoutube[[ $parent.item[0].findkey ]][[ $index ]]">
+
+                                            </div>
+
+                                            <img src="https://img.youtube.com/vi/[[ element.data.youtube_id ]]/0.jpg" class="img-responsive">
+
+                                            <h4>
+                                                [[ element.data.youtube_title ]]
+                                            </h4>
+
+                                            <p>
+                                                [[ element.data.youtube_desc ]]
+                                            </p>
+                                        </div>
+
+                                    </div>
+
+                                    <div ng-if="element.current_type=='youtube_banner' && element.data.youtube_id!=null">
+                                        <div class="view-lead-element-content">
+                                            <a href="https://www.youtube.com/watch?v=[[ element.data.youtube_id ]]" target="_blank">
+                                                <img src="https://img.youtube.com/vi/[[ element.data.youtube_id ]]/hqdefault.jpg" class="img-responsive">
+                                            </a>
+
+                                            <h4>
+                                                [[ element.data.youtube_title ]]
+                                            </h4>
+
+                                            <p>
+                                                [[ element.data.youtube_desc ]]
+                                            </p>
+
+                                        </div>
+                                    </div>
+
+                                    <div ng-if="element.current_type=='external_baner' && element.data.banner.name!=null">
+
+                                        <div class="view-lead-element-content">
+                                            <a href="[[ element.data.banner_url ]]" target="[[ element.data.target_url ]]">
+                                                <img src="/image/[[ element.data.banner.name ]]/[[ element.data.banner.disk ]]/[[ element.data.banner.path ]]/500" class="img-responsive">
+                                            </a>
+
+
+                                            <h4>
+                                                [[ element.data.banner_title ]]
+                                            </h4>
+
+                                            <p>
+                                                [[ element.data.banner_desc ]]
+                                            </p>
+
+
+                                        </div>
+
+                                    </div>
+
+                                    <div ng-if="element.current_type=='agenda_custom_image' && element.data.entity_data!=null">
+
+                                        <div class="view-lead-element-content">
+
+
+                                            <img
+                                                    ng-if="element.data.image_type=='show_uplaod_image'"
+                                                    src="/image/[[ element.data.custom_image.name ]]/[[ element.data.custom_image.disk ]]/[[ element.data.custom_image.path ]]/400"
+                                                    class="img-responsive"
+                                            >
+
+                                            <div
+                                                ng-if="element.data.image_type=='show_icon_image'"
+                                                style="background-color: #[[ element.data.entity_data.params.color.rgb ]];height: 200px;"
+                                            >
+                                                <img src="[[ element.data.entity_data.params.icon ]]" class="img-responsive">
+                                            </div>
+
+                                            <img
+                                                    ng-if="element.data.image_type=='show_entity_image'"
+                                                    src="/image/[[ element.data.entity_data.image ]]/[[ element.data.entity_data.disk ]]/[[ element.data.entity_data.image_path ]]/400"
+                                                    class="img-responsive"
+                                            >
+
+                                            <h4>
+                                                [[ element.data.entity_data.title ]]
+                                            </h4>
+                                            <i class="data">
+                                                [[ element.data.entity_data.begin ]] - [[ element.data.entity_data.end ]]
+                                            </i>
+                                            <div class="intro">
+                                                [[ element.data.entity_data.intro ]]
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div ng-if="element.current_type=='content_custom_image' && element.data.entity_data!=null">
+
+                                        <div class="view-lead-element-content">
+
+                                            <img
+                                                    ng-if="element.data.image_type=='show_uplaod_image'"
+                                                    src="/image/[[ element.data.custom_image.name ]]/[[ element.data.custom_image.disk ]]/[[ element.data.custom_image.path ]]/400"
+                                                    class="img-responsive"
+                                            >
+
+                                            <div
+                                                    ng-if="element.data.image_type=='show_icon_image'"
+                                                    style="background-color: #[[ element.data.entity_data.params.color.rgb ]];height: 200px;"
+                                            >
+                                                <img src="[[ element.data.entity_data.params.icon ]]" class="img-responsive">
+                                            </div>
+
+                                            <img
+                                                    ng-if="element.data.image_type=='show_entity_image'"
+                                                    src="/image/[[ element.data.entity_data.image ]]/[[ element.data.entity_data.disk ]]/[[ element.data.entity_data.image_path ]]/400"
+                                                    class="img-responsive"
+                                            >
+
+                                            <h4>
+                                                [[ element.data.entity_data.title ]]
+                                            </h4>
+                                            <i class="data">
+                                                [[ element.data.entity_data.begin ]] - [[ element.data.entity_data.end ]]
+                                            </i>
+                                            <div class="intro">
+                                                [[ element.data.entity_data.intro ]]
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+
+
+
+                                </div>
+                            </div>
+
+
+                        </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                </div>
+
+
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+<div ng-if="cloud_show">
+
+    <button
+            type="button"
+            class="btn btn-danger btn-lg close-btn"
+            ng-click="$parent.to_edit=null;$parent.cloud_show=false"
+    >
+        <i class="fa fa-times" aria-hidden="true"></i>
+    </button>
+
+    <div ng-if="to_edit.current_type=='agenda'">
+        <div edit-lead-cloud-agenda="[[ to_edit ]]" find-key-info="[[ editkeyinfo ]]"></div>
+    </div>
+
+    <div ng-if="to_edit.current_type=='content'">
+        <div edit-lead-cloud-content="[[ to_edit ]]" find-key-info="[[ editkeyinfo ]]"></div>
+    </div>
+
+    <div ng-if="to_edit.current_type=='only_youtube'">
+        <div edit-lead-cloud-only-youtube="[[ to_edit ]]" find-key-info="[[ editkeyinfo ]]"></div>
+    </div>
+
+    <div ng-if="to_edit.current_type=='external_baner'">
+        <div edit-lead-cloud-external-banner="[[ to_edit ]]" find-key-info="[[ editkeyinfo ]]"></div>
+    </div>
+
+    <div ng-if="to_edit.current_type=='agenda_custom_image'">
+        <div edit-lead-cloud-agendat-pic="[[ to_edit ]]" find-key-info="[[ editkeyinfo ]]"></div>
+    </div>
+
+    <div ng-if="to_edit.current_type=='content_custom_image'">
+        <div edit-lead-cloud-content-pic="[[ to_edit ]]" find-key-info="[[ editkeyinfo ]]"></div>
+    </div>
+
+
+    <div ng-if="to_edit.current_type=='youtube_banner'">
+        <div edit-lead-cloud-link-youtube="[[ to_edit ]]" find-key-info="[[ editkeyinfo ]]"></div>
+    </div>
+
+
+</div>
+
+<div class="cloud-lead-overlay" ng-if="cloud_show">
+
+
+
+</div>

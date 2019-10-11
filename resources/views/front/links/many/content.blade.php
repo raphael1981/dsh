@@ -1,0 +1,1 @@
+@include('front.links.many.partials.'.$data->params->config->show)

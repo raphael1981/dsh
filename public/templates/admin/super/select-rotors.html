@@ -1,0 +1,71 @@
+<h3>Logotypy</h3>
+<hr>
+<div class="row" ng-init="initData()">
+    <div class="col-md-3">
+
+        <form class="form-inline">
+            <div class="form-group">
+                <input
+                        type="text"
+                        class="form-control"
+                        ng-model="phrase"
+                        ng-change="sRotors()"
+                        placeholder="Fraza">
+            </div>
+            <div>
+                <hr>
+            </div>
+        </form>
+
+        <div>
+            <div class="row" ng-repeat="r in searchRotors">
+
+                <div class="col-md-10">
+                    <h4>[[ r.name ]]</h4>
+                    <p class="text-muted">[[ r.rotor_title ]]</p>
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-success" ng-click="pushToSelected(r)">
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <div class="col-md-12">
+                    <hr>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-md-9">
+
+        <div class="row" ng-repeat="r in selectRotors">
+            <div class="col-md-10">
+                <h4>[[ r.name ]]</h4>
+                <p class="text-muted">[[ r.rotor_title ]]</p>
+                <div>
+
+                    <div class="row">
+                        <div class="col-md-2" ng-repeat="l in r.logotypes">
+                            <img src="[[ l.logo_uri ]]" class="img-responsive">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-md-1">
+                <button type="button" class="btn btn-primary" ng-click="editRotor(r,$index)">
+                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                </button>
+            </div>
+            <div class="col-md-1">
+                <button type="button" class="btn btn-danger" ng-click="removeRotor($index)">
+                    <i class="fa fa-minus" aria-hidden="true"></i>
+                </button>
+            </div>
+            <div class="col-md-12">
+                <hr>
+            </div>
+        </div>
+
+    </div>
+</div>

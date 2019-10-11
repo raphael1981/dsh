@@ -1,0 +1,66 @@
+<button
+        class="btn btn-danger btn-lg btn-save-update"
+        ng-click="updateCategory()"
+>
+    <i class="fa fa-floppy-o" aria-hidden="true"></i> Zapisz
+</button>
+<div class="loading" ng-class="loading" ng-init="loading='hidden'">
+    <img src="/images/loading.svg" style="width: 100px">
+</div>
+<div
+        class="row"
+        ng-init="initData()"
+>
+
+
+
+    <div class="col-xs-12 col-sm-12 col-md-4 col-md-offset-4">
+
+        <form class="form-horizontal">
+            <fieldset>
+
+                <!-- Text input-->
+                <div class="form-group" ng-class="classes.name">
+                    <div class="col-md-12">
+                        <input
+                                name="textinput"
+                                type="text"
+                                placeholder="Nazwa"
+                                class="form-control input-md"
+                                ng-model="data.name"
+                                ng-change="checkName()"
+                        >
+
+                        <span class="help-block" ng-if="alerts.is_in_base">
+                            Kategoria jest już w bazie
+                        </span>
+
+                    </div>
+                </div>
+
+
+                <!--<div class="form-group">-->
+                    <!--<div class="col-md-12">-->
+
+                        <!--<ul class="list-inline">-->
+                            <!--<li ng-repeat="svg in params.svg">-->
+                                <!--<a-->
+                                        <!--href="#"-->
+                                        <!--class="svg-show"-->
+                                        <!--ng-click="$event.preventDefault();setSvg($event, svg);"-->
+                                <!--&gt;-->
+
+                                    <!--<img src="[[ svg ]]" class="img-responsive">-->
+
+                                <!--</a>-->
+                            <!--</li>-->
+                        <!--</ul>-->
+
+                    <!--</div>-->
+                <!--</div>-->
+
+            </fieldset>
+        </form>
+
+    </div>
+</div>

@@ -1,0 +1,63 @@
+<div class="cloud-place jumbotron" ng-class="fastaddplaceclass" ng-init="fastaddplaceclass='hidden'">
+
+    <div class="fast-add-content">
+
+        <form class="form-horizontal" ng-submit="addPlaceFast()">
+            <fieldset>
+
+                <!-- Form Name -->
+                <legend>
+                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                    Dodaj miejsce
+                </legend>
+
+                <!-- Text input-->
+                <div class="form-group" ng-class="fastplaceclasses.name">
+                    <label class="col-md-4 control-label" for="place">Nazwa miejscea</label>
+                    <div class="col-md-8">
+                        <input
+                                id="place"
+                                name="place"
+                                type="text"
+                                placeholder="Nazwa miejsca"
+                                class="form-control input-md"
+                                ng-model="fastplace.name"
+                                ng-init="fastplace.name=''"
+                                ng-change="checkFastPlaceName()"
+                        >
+                    </div>
+                </div>
+
+                <!-- Textarea -->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="place_description">Krótki opis</label>
+                    <div class="col-md-8">
+                        <textarea
+                                class="form-control"
+                                id="place_description"
+                                name="place_description"
+                                ng-model="fastplace.description"
+                                ng-init="fastplace.description=''"
+                        ></textarea>
+                    </div>
+                </div>
+
+                <!-- Button -->
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <button
+                                class="btn btn-primary btn-full-length"
+                        >
+                            Dodaj miesjce
+                        </button>
+                    </div>
+                </div>
+
+            </fieldset>
+        </form>
+
+
+    </div>
+
+
+</div>

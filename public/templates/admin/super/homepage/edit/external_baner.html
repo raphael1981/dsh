@@ -1,0 +1,206 @@
+<div class="cloud-inside" ng-if="show_edit_cloud_external_banner">
+
+
+    <button
+            type="button"
+            class="btn btn-danger btn-lg close-btn-edit"
+            ng-click="hideEditCloudExternalBanner()"
+    >
+        <i class="fa fa-times" aria-hidden="true"></i>
+    </button>
+
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-4">
+            <div
+                    ngf-drop
+                    ngf-select
+                    ng-model="file"
+                    ngf-multiple="false"
+                    ngf-allow-dir="true"
+                    ngf-accept="'image/*'"
+                    name="file"
+                    ngf-pattern="'image/*'"
+                    class="drop-box">
+
+            </div>
+
+
+            <div class="progress">
+                <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: [[ progress ]]%;">
+                    [[ progress ]]%
+                </div>
+            </div>
+
+
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-8">
+
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-6">
+
+                    <form class="form-horizontal" name="form">
+                        <fieldset>
+
+                            <div class="form-group">
+
+                                <div ng-if="$parent.collection.banner_color!=null">
+                                    <div style="background-color: #[[ $parent.collection.banner_color.rgb ]];width: 120px;height: 120px"></div>
+                                    <hr>
+                                </div>
+
+                                <ul class="list-inline">
+                                    <li ng-repeat="c in colors">
+                                        <a
+                                                href="#"
+                                                style="background-color: #[[ c.rgb ]];width: 90px;height: 90px;display: table;margin: 2px;"
+                                                ng-click="$event.preventDefault();$parent.collection.banner_color=c"
+                                        ></a>
+                                    </li>
+                                </ul>
+
+                            </div>
+                            <hr>
+
+                            <!-- Text input-->
+                            <div class="form-group" ng-class="url_valid">
+                                <div class="col-md-12">
+
+                                    <input
+                                            id="banner_url"
+                                            name="banner_url"
+                                            type="text"
+                                            ng-model="collection.banner_url"
+                                            placeholder="Link"
+                                            ng-change="(form.banner_url.$valid)?(url_valid='has-success'):(url_valid='has-error')"
+                                            class="form-control input-md">
+                                </div>
+                            </div>
+
+                            <!-- Select Basic -->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Otwórz w:</label>
+                                <div class="col-md-8">
+                                    <select name="target" class="form-control" ng-model="target_url">
+                                        <option value="_self">w tym samym oknie</option>
+                                        <option value="_blank">nowym oknie</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Select Basic -->
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <input
+                                            id="banner_title"
+                                            name="banner_title"
+                                            type="text"
+                                            ng-model="collection.banner_title"
+                                            placeholder="Nazwa"
+                                            class="form-control input-md">
+                                </div>
+                            </div>
+
+                            <!-- Select Basic -->
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <textarea class="form-control" ng-model="collection.banner_desc"></textarea>
+                                </div>
+                            </div>
+
+                        </fieldset>
+                    </form>
+
+
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-6">
+                    <div ng-if="!upload_status" class="upload-screen">
+                        <div>
+
+                            <div ng-show="cropper.croppedImage!=null" class="crop-view">
+                                <img ng-src="[[ cropper.croppedImage ]]" class="img-responsive" />
+                            </div>
+
+                            <button
+                                    class="btn btn-success  btn-full-length"
+                                    type="button"
+                                    ng-click="uploadFiles(cropper.croppedImage)"
+                                    ng-if="file"
+                            >
+                                <i class="fa fa-cloud-upload" aria-hidden="true"></i> Wgraj skadrowany obrazek
+                            </button>
+
+                            <img src="/image/[[ collection.uploaded_file.name ]]/[[ collection.uploaded_file.disk ]]/[[ collection.uploaded_file.path ]]/500" class="img-responsive">
+
+                        </div>
+
+                    </div>
+
+                    <hr>
+
+                    <div ng-if="!upload_status" class="upload-screen">
+                        <!------------------ Aspect start ----------------------------------------------->
+                        <div id="aspect" style="display:block">
+                            <label class="radio-inline">
+                                <input type="radio" name="cropmode" ng-model="$parent.$parent.cropindex" ng-value="0" ng-checked> Normal
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="cropmode" ng-model="$parent.$parent.cropindex" ng-value="1"> Panoram
+                            </label>
+                        </div><div onclick="showHide(this)" style="cursor:pointer">.</div>
+                        <script>
+                            function showHide(obj){
+                                var aspect = document.getElementById('aspect');
+                                if(!obj.expander){
+                                    aspect.style.display="block"
+                                    obj.expander = true
+                                }else{
+                                    aspect.style.display="none"
+                                    obj.expander = false
+                                }
+                            }
+                        </script>
+                        <!------------------ Aspect end ----------------------------------------------->
+
+                        <canvas
+                                width="450"
+                                height="450"
+                                id="canvas"
+                                style="margin: auto;display: block; background:#C0C0C0"
+                                image-cropper
+                                image="file | ngfDataUrl"
+                                cropped-image="cropper.croppedImage"
+                                crop-width="$parent.cropcurrent.width"
+                                crop-height="$parent.cropcurrent.height"
+                                keep-aspect="true"
+                                touch-radius="30"
+                                crop-area-bounds="bounds"></canvas>
+
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-12">
+            <hr>
+            <button
+                    type="button"
+                    class="btn btn-primary btn-full-length"
+                    ng-if="is_can_add"
+                    ng-click="saveLeadElementBanner(collection.uploaded_file,collection.banner_url,target_url,findkeyinfo,collection,cropindex)"
+            >
+                Zapisz zmiany
+            </button>
+        </div>
+    </div>
+
+
+</div>
+
+

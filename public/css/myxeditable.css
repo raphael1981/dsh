@@ -1,0 +1,26 @@
+@import url("xeditable.css");
+
+.editable-wrap {
+    display:block;
+    width: 100%;
+    padding-right:10px;
+    .editable-controls {
+        > input,
+        > select,
+        > textarea {
+            display: inline-block;
+            width: 100%;
+        };
+        border-bottom:1px solid #cccccc; margin:0 20px 20px 0; padding:10px
+    }
+}
+
+
+ .editable-container.editable-inline, .editable-form > .control-group, .editable-input, .editableform .form-control {
+            width:100%;
+        }
+
+
+
+.editlist>div{border-bottom:1px solid #cccccc; margin:0 20px 20px 0; padding:10px; cursor:pointer}
+		

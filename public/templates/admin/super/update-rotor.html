@@ -1,0 +1,136 @@
+<style>
+    .overlayer-logo{
+        position: fixed;
+        width: 100vw;
+        height: 100vh;
+        z-index: 33;
+        left: 0;
+        top:0;
+        background: rgba(0,0,0,0.4);
+    }
+    .cloud-to-edit{
+        position: fixed;
+        z-index: 34;
+        width: 90%;
+        left: 5%;
+        top: 8vh;
+        height: 82vh;
+        background: #FFF;
+        overflow-y: scroll;;
+    }
+    .padding-logo{
+        padding: 15px 15px 40px 15px;
+    }
+
+    button.save-rotor{
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        z-index: 34;
+    }
+
+</style>
+
+
+<div class="overlayer-logo" ng-if="rotor!=null" ng-click="$parent.rotor=null">
+
+</div>
+
+<div class="cloud-to-edit" ng-if="rotor!=null">
+
+
+    <div class="padding-logo">
+
+        <form class="form-horizontal" ng-submit="saveLogosRotor()">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row form-group" ng-class="classes.name">
+                    <div class="col-md-3">
+                        <label class="control-label">
+                            Nazwa w panelu
+                        </label>
+                    </div>
+                    <div class="col-md-9">
+                        <input type="text" ng-model="rotor.name" class="form-control" ng-change="checkName()">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <hr>
+                    </div>
+                </div>
+                <div class="row form-group" ng-class="classes.rotor_title">
+                    <div class="col-md-3">
+                        <label class="control-label">
+                            Nagłówek rotora
+                        </label>
+                    </div>
+                    <div class="col-md-9">
+                        <input type="text" ng-model="rotor.rotor_title" class="form-control" ng-change="checkRotorTitle()">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <hr>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-2">
+                <div
+                        ngf-drop
+                        ng-model="$parent.logo"
+                        ngf-drag-over-class="dragover"
+                        ngf-multiple="false"
+                        ngf-allow-dir="true"
+                        accept="image/*"
+                        class="drop-box">
+
+                </div>
+
+
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: [[ progress ]]%;">
+                        [[ progress ]]%
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-10">
+
+                <div class="row" ui-sortable ng-model="rotor.logotypes">
+
+                    <div
+                            class="col-xs-12 col-sm-12 col-sort-view"
+                            ng-repeat="lg in rotor.logotypes">
+
+
+                        <div class="row">
+                            <div class="col-md-2">
+                                <img src="[[ lg.logo_uri ]]" class="img-responsive">
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" ng-model="lcollection[$index].link">
+                            </div>
+                            <div class="col-md-1">
+                                <button type="button" class="btn btn-danger" ng-click="removeLogo($index)"><i class="fa fa-remove"></i></button>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <button class="btn btn-block btn-primary save-rotor" type="submit">
+            Zapisz zmiany
+        </button>
+        </form>
+
+    </div>
+
+</div>

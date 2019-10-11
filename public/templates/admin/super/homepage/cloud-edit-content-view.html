@@ -1,0 +1,118 @@
+<div class="cloud-inside">
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-6">
+            <h3>Szukanie po tytule</h3>
+            <form class="form-inline" ng-submit="$event.preventDefault()">
+                <div class="form-group">
+                    <input
+                            type="text"
+                            class="form-control"
+                            placeholder="Wpisz frazę"
+                            ng-model="frase"
+                            ng-change="searchContents()"
+                    >
+                </div>
+            </form>
+
+            <hr>
+
+            <div class="row">
+                <div
+                        class="col-xs-12 col-sm-12"
+                        ng-repeat="ct in contents"
+                >
+
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-2">
+                            <img
+                                    src="/image/[[ ct.image ]]/[[ ct.disk ]]/[[ ct.image_path ]]/350"
+                                    class="img-responsive"
+                            >
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-6">
+                            <h4>
+                                [[ ct.title ]]
+                            </h4>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-2">
+                            <h5>
+                                <span class="label label-info">[[ ct.language.name ]]</span>
+                            </h5>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-2">
+                            <button
+                                    type="button"
+                                    class="btn btn-success"
+                                    ng-click="addContent(ct)"
+                            >
+                                <i class="fa fa-plus-square" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-6">
+
+            <div class="view-box" ng-if="collection.content!=null">
+
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-4">
+                        <img src="/image/[[ collection.content.image ]]/[[ collection.content.disk ]]/[[ collection.content.image_path ]]/600" class="img-responsive">
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-6">
+                        <div class="image">
+
+                            <div class="date">
+                                <h3>[[ collection.content.begin ]] [[ collection.content.end ]]<h3>
+                            </div>
+
+                            <div class="title">
+                                <h4>[[ collection.content.title ]]</h4>
+                            </div>
+
+                            <div class="desc">
+                                [[ collection.content.intro ]]
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-2">
+                        <button
+                                type="button"
+                                class="btn btn-danger"
+                                ng-click="removeContent(ct)"
+                        >
+                            <i class="fa fa-minus-square" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-12">
+            <hr>
+            <button
+                    type="button"
+                    class="btn btn-primary btn-full-length"
+                    ng-click="saveLeadElementContent(collection.content,findkeyinfo)"
+            >
+                Zapisz zmiany
+            </button>
+        </div>
+    </div>
+
+</div>
+
+

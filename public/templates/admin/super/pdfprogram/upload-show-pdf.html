@@ -1,0 +1,43 @@
+
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-6">
+
+        <div  ng-if="translation!=null">
+            <h3>Program na miesiąc - [[ upshdata.month | showMonthName: translation ]] [[ upshdata.year ]]</h3>
+
+            <div ngf-drop
+                 ng-model="$parent.pdf"
+                 ngf-drag-over-class="dragover"
+                 ngf-multiple="false"
+                 ngf-allow-dir="true"
+                 accept="*"
+                 class="drop-box">
+
+            </div>
+
+
+            <div class="progress">
+                <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: [[ progress ]]%;">
+                    [[ $parent.progress ]]%
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-6" ng-if="view_complete">
+        <h4>Aktualny program</h4>
+        <div ng-if="$parent.show_link_program">
+            <a href="/media/programy/[[ $parent.upshdata.year ]]/[[ $parent.upshdata.month ]]/program-[[ $parent.lang_data.tag ]].pdf" target="_blank">
+                <img src="/images/pdf.png" class="img-responsive" style="width: 80px">
+            </a>
+        </div>
+        <div ng-if="!$parent.show_link_program">
+            brak programu
+        </div>
+    </div>
+</div>
+
+
+
+
+
+

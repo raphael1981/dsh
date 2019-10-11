@@ -1,0 +1,13 @@
+<h4>
+    <a href="#" editable-radiolist="status" e-ng-options="s.value as s.text for s in ::statuses track by s.value" onaftersave="updateStatus($data)">
+        <span ng-if="status==-1">
+            użytkownik zrezygnował
+        </span>
+        <span ng-if="status==-0">
+            użytkownik niepotwierdzony
+        </span>
+        <span ng-if="status==1">
+            użytkownik potwierdzony
+        </span>
+    </a>
+</h4>

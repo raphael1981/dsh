@@ -1,0 +1,604 @@
+<script type="text/ng-template" id="nodes_renderer.html">
+    <div ui-tree-handle class="tree-node tree-node-content">
+        <a class="btn btn-success btn-xs" ng-if="node.nodes && node.nodes.length > 0" data-nodrag ng-click="toggle(this)"><span
+                class="glyphicon"
+                ng-class="{
+          'glyphicon-chevron-right': collapsed,
+          'glyphicon-chevron-down': !collapsed
+        }"></span></a>
+
+        <a href="#"
+           editable-text="node.title"
+           data-nodrag
+           onbeforesave="updateLinkNameBefore($data, node.ref, node.id)"
+           onaftersave="updateLinkNameAfter($data, node.ref)"
+        >
+            [[ node.title || 'empty' ]]
+        </a>
+
+        <a class="pull-right btn btn-warning btn-sm" ng-if="node.ref==null" data-nodrag ng-click="$parent.changeSectionColor(node.id)">
+            <i class="fa fa-paint-brush" aria-hidden="true"></i>
+        </a>
+
+        <a class="pull-right btn btn-info btn-sm" data-nodrag ng-click="$parent.changeLinkDest(node.id)">
+            <span
+                    class="glyphicon glyphicon-pencil"></span>
+        </a>
+
+        <a ng-show="node.status==1" class="pull-right btn btn-success btn-xs" data-nodrag ng-click="active(node)">
+            <span
+                    class="glyphicon glyphicon-ok"></span>
+        </a>
+
+        <a  ng-show="node.status==0" class="pull-right btn btn-warning btn-xs" data-nodrag ng-click="active(node)">
+            <span
+                    class="glyphicon glyphicon-ban-circle"></span>
+        </a>
+
+
+        <a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="remove(this)">
+            <span
+                class="glyphicon glyphicon-remove"></span>
+        </a>
+
+        <a class="pull-right btn btn-primary btn-xs" data-nodrag ng-click="newSubItem(this)" style="margin-right: 8px;">
+            <span
+                class="glyphicon glyphicon-plus"></span>
+        </a>
+
+        <a class="btn pull-right" data-nodrag
+           style="margin-right: 8px;background:#[[ node.params.color.rgb ]]; display: inline-block;width: 30px;height:25px;text-align: center;color:#FFF;font-size:18px;padding-top: 0px;padding-left: 5px"
+           ng-click="editIconLink(node.id)"
+        >
+            <i class="fa fa-file-image-o" aria-hidden="true"></i>
+        </a>
+
+        <span class="pull-right"
+              style="margin-right: 8px;background:#[[ node.params.color.rgb ]]; display: inline-block;width: 30px;height:25px;text-align: center;color:#FFF;font-size:18px;padding-top: 5px;"
+        >
+            <i class="fa fa-tint" aria-hidden="true"></i>
+        </span>
+
+
+
+
+
+    </div>
+    <ol ui-tree-nodes="" ng-model="node.nodes" ng-class="{hidden: collapsed}">
+        <li ng-repeat="node in node.nodes" ui-tree-node ng-include="'nodes_renderer.html'">
+        </li>
+    </ol>
+</script>
+<div class="row" ng-init="initData()">
+
+
+    <div class="col-xs-12 col-sm-12 col-md-5">
+        <div class="row">
+            <div class="col-sm-12">
+
+                <div class="col-for-tree-build">
+
+                    <div class="modal-form new-node-title" ng-class="modalnewcat" ng-init="modalnewcat='hidden'">
+                        <form class="form-horizontal">
+                            <fieldset>
+
+
+                                <!-- Prepended text-->
+                                <div class="form-group" ng-class="ltitleclass" ng-init="ltitleclass=''">
+                                    <div class="col-md-8 col-md-offset-2">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">nazwa</span>
+                                            <input
+                                                    id="prependedtext"
+                                                    name="prependedtext"
+                                                    class="form-control"
+                                                    placeholder="nazwa"
+                                                    ng-model="ltitle"
+                                                    type="text">
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <!-- Button (Double) -->
+                                <div class="form-group">
+                                    <div class="col-md-8 col-md-offset-2">
+                                        <button
+                                                id="button1id"
+                                                name="button1id"
+                                                ng-click="saveLinkTitle()"
+                                                type="button"
+                                                class="btn btn-success">
+                                            Zapisz
+                                        </button>
+                                        <button
+                                                id="button2id"
+                                                name="button2id"
+                                                type="button"
+                                                class="btn btn-danger"
+                                                ng-click="ltitle='';ltitleclass='';modalnewcat='hidden'"
+                                        >
+                                            Anuluj
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </fieldset>
+                        </form>
+
+                    </div>
+                    <button
+                            class="btn btn-primary btn-full-length"
+                            ng-click="saveTree()"
+                    >
+                        <i class="fa fa-floppy-o" aria-hidden="true"></i> Zapisz drzewo linków
+                    </button>
+                    <div ui-tree id="tree-root">
+                        <ol ui-tree-nodes ng-model="nodes">
+                            <li ng-repeat="node in nodes" ui-tree-node ng-include="'nodes_renderer.html'"></li>
+                        </ol>
+                    </div>
+                    <button
+                            class="btn btn-primary btn-full-length"
+                            ng-click="saveTree()"
+                    >
+                        <i class="fa fa-floppy-o" aria-hidden="true"></i> Zapisz drzewo linków
+                    </button>
+
+                </div>
+
+                <!--<div class="info">-->
+                    <!--[[ info ]]-->
+                <!--</div>-->
+                <!--<pre class="code">[[ nodes | json ]]</pre>-->
+            </div>
+
+        </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-12 col-md-7" ng-if="link_id_color!=null">
+
+        <div edit-color-section id="[[ link_id_color ]]"></div>
+
+    </div>
+
+
+    <div class="col-xs-12 col-sm-12 col-md-7" ng-if="link_id_icon!=null">
+
+        <div edit-icon-single-link id="[[ link_id_icon ]]"></div>
+
+    </div>
+
+
+    <div class="col-xs-12 col-sm-12 col-md-7" ng-if="is_edit">
+
+
+        <form name="myForm" class="form-horizontal">
+            <div class="form-group">
+                <div class="col-md-12">
+                    <select name="templates" id="templates" class="form-control"
+                            ng-options="option.name for option in templates track by option.id"
+                            ng-model="editlink.template"></select>
+                    </div>
+                </div>
+
+        </form>
+
+        <button type="submit" class="btn btn-success btn-full-length btn-lg" ng-click="saveTemplateData()">Zapisz zmiany szablon linku</button>
+
+        <h2>[[ editlink.link.title ]]</h2>
+
+
+        <div description-link-edit></div>
+
+
+        <hr>
+
+        <!--<div branch-menu-show></div>-->
+
+        <!--<hr>-->
+
+
+        <div ng-if="editlink.template.params.is_single" ng-init="">
+            <div class="alert alert-info">
+                <span class="glyphicon glyphicon-link" aria-hidden="true"></span> Wybrany zasób
+            </div>
+
+            <div class="row" ng-if="edited_params.entity_model!=null">
+                <div class="col-xs-12 col-sm-12 col-md-7">
+                    <h4>[[ edited_params.entity_model.title ]]</h4>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-2">
+                    <h5><span class="label label-info">[[ edited_params.entity_model.language.name ]]</span></h5>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-3">
+                    <button type="button" class="btn btn-danger">
+                        <i class="fa fa-times" aria-hidden="true"></i>
+                    </button>
+                    <button type="button" class="btn btn-primary" ng-click="editText($event,edited_params)">
+                        <span class="glyphicon glyphicon-edit"></span>
+                    </button>
+                </div>
+            </div>
+
+            <hr>
+
+            <div edit-select-single-data></div>
+        </div>
+
+
+
+
+
+        <div ng-if="editlink.template.params.is_unstandard" ng-init="">
+            <div class="alert alert-info">
+                <span class="glyphicon glyphicon-link" aria-hidden="true"></span> Nie standardowy
+            </div>
+        </div>
+
+
+
+        <div ng-if="editlink.template.params.is_filtered" ng-init="">
+            <div class="alert alert-info">
+                <span class="glyphicon glyphicon-link" aria-hidden="true"></span> Filtr wybranych kategorii (Wydarzenia)
+            </div>
+
+            <hr>
+
+            <h5>Grupuj miesiącami</h5>
+
+            <form name="myForm" class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <select name="group" id="group" class="form-control"
+                                ng-options="option.name for option in group track by option.type"
+                                ng-model="edited_params.group"></select>
+                    </div>
+                </div>
+
+            </form>
+
+
+            <hr>
+
+            <h5>Sortowanie</h5>
+
+            <form name="myForm" class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <select name="order" id="order" class="form-control"
+                                ng-options="option.name for option in order track by option.type"
+                                ng-model="edited_params.order"></select>
+                    </div>
+                </div>
+
+            </form>
+
+
+            <hr>
+
+            <h5>Układ</h5>
+
+            <form name="myForm" class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <select name="templates" id="templates" class="form-control"
+                                ng-options="option.name for option in elastic_views track by option.type"
+                                ng-model="edited_params.elastic_view"></select>
+                    </div>
+                </div>
+
+            </form>
+
+            <hr>
+            <ui-select
+                    multiple
+                    ng-model="edited_params.categories"
+                    theme="bootstrap"
+                    ng-disabled="false"
+                    sortable="true"
+                    close-on-select="true"
+                    style="width: 100%;"
+                    title="Single property binding with async data"
+            >
+                <ui-select-match
+                        placeholder="">
+                    <span class="big-label">[[ $item.name ]]</span>
+                </ui-select-match>
+
+                <ui-select-choices
+                        repeat="category.id as category in categories | propsFilter: {name: $select.search}"
+                >
+
+                    <h4 class="select-suggest-h4">[[ category.name ]]</h4>
+
+                </ui-select-choices>
+            </ui-select>
+
+
+        </div>
+
+
+        <div ng-if="editlink.template.params.is_advanced_filtered" ng-init="">
+            <div class="alert alert-info">
+                <span class="glyphicon glyphicon-link" aria-hidden="true"></span> Filtr zawansowany wydarzeń
+            </div>
+
+
+            <hr>
+            <ui-select
+                    multiple
+                    ng-model="edited_params.categories"
+                    theme="bootstrap"
+                    ng-disabled="false"
+                    sortable="true"
+                    close-on-select="true"
+                    style="width: 100%;"
+                    title="Single property binding with async data"
+            >
+                <ui-select-match
+                        placeholder="">
+                    <span class="big-label">[[ $item.name ]]</span>
+                </ui-select-match>
+
+                <ui-select-choices
+                        repeat="category.id as category in categories | propsFilter: {name: $select.search}"
+                >
+
+                    <h4 class="select-suggest-h4">[[ category.name ]]</h4>
+
+                </ui-select-choices>
+            </ui-select>
+
+
+        </div>
+
+
+        <div ng-if="editlink.template.params.is_filtered_content" ng-init="">
+            <div class="alert alert-info">
+                <span class="glyphicon glyphicon-link" aria-hidden="true"></span> Filtr wybranych kategorii (Artykuły)
+            </div>
+
+            <hr>
+
+
+            <h5>Sortowanie</h5>
+
+            <form name="myForm" class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <select name="order" id="order" class="form-control"
+                                ng-options="option.name for option in order track by option.type"
+                                ng-model="edited_params.order"></select>
+                    </div>
+                </div>
+
+            </form>
+
+
+            <hr>
+
+
+            <h5>Układ</h5>
+
+            <form name="myForm" class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <select name="layout" id="layout" class="form-control"
+                                ng-options="option.name for option in config_temps.is_many track by option.show"
+                                ng-model="edited_params.config"></select>
+                    </div>
+                </div>
+
+            </form>
+
+            <hr>
+
+
+            <h5>Czy uwzględnić w filtrach lata?</h5>
+
+            <form name="myForm" class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <select name="order" id="order" class="form-control"
+                                ng-options="option.name for option in is_year_in_filter track by option.value"
+                                ng-model="edited_params.is_year_in_filter"></select>
+                    </div>
+                </div>
+
+            </form>
+
+            <hr>
+
+            <h5>Czy uruchomić opcję filtrowania?</h5>
+
+            <form name="myForm" class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <select name="order" id="is_filters_active" class="form-control"
+                                ng-options="option.name for option in is_filters_active track by option.value"
+                                ng-model="edited_params.is_filters_active"></select>
+                    </div>
+                </div>
+
+            </form>
+
+            <hr>
+
+            <ui-select
+                    multiple
+                    ng-model="edited_params.categories"
+                    theme="bootstrap"
+                    ng-disabled="false"
+                    sortable="true"
+                    close-on-select="true"
+                    style="width: 100%;"
+                    title="Single property binding with async data"
+            >
+                <ui-select-match
+                        placeholder="">
+                    <span class="big-label">[[ $item.name ]]</span>
+                </ui-select-match>
+
+                <ui-select-choices
+                        repeat="category.id as category in categories | propsFilter: {name: $select.search}"
+                >
+
+                    <h4 class="select-suggest-h4">[[ category.name ]]</h4>
+
+                </ui-select-choices>
+            </ui-select>
+
+
+        </div>
+
+
+
+        <div ng-if="editlink.template.params.is_firtsleaf" ng-init="">
+
+            <div class="alert alert-info">
+                <span class="glyphicon glyphicon-link" aria-hidden="true"></span> Pierwszy link z linków potomnych
+            </div>
+
+        </div>
+
+
+
+        <div ng-if="editlink.template.params.is_filteredleaf" ng-init="">
+
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-md-2 control-label" for="layout">
+                        Układ
+                    </label>
+                    <div class="col-md-10">
+                        <select name="layout" id="layout" class="form-control"
+                                ng-options="option.name for option in config_temps.is_many track by option.show"
+                                ng-model="edited_params.config"></select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="alert alert-info">
+                <span class="glyphicon glyphicon-link" aria-hidden="true"></span> Filtrowanie w ramach linków potomnych
+            </div>
+
+        </div>
+
+
+
+
+        <div ng-if="editlink.template.params.is_many" ng-init="">
+
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-md-2 control-label" for="layout">
+                        Układ
+                    </label>
+                    <div class="col-md-10">
+                        <select name="layout" id="layout" class="form-control"
+                                ng-options="option.name for option in config_temps.is_many track by option.show"
+                                ng-model="edited_params.config"></select>
+                    </div>
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="alert alert-info">
+                <span class="glyphicon glyphicon-link" aria-hidden="true"></span> Kafelkowy układ treści
+            </div>
+
+
+
+            <button
+                    type="button"
+                    ng-if="link_id!=null"
+                    ng-click="saveOrderData()"
+                    class="btn btn-warning btn-full-length"
+            >
+                Zapisz kolejność artykułów
+            </button>
+
+
+            <hr>
+
+            <div class="row" ui-sortable ng-model="editlink.items">
+                <div
+                        class="col-xs-12 col-sm-12 col-md-12"
+                        ng-repeat="item in editlink.items" class="item"
+                        style="background-color:#ffffff; cursor:move"
+                >
+
+                    <div style="padding: 3px 0; border-bottom:1px solid #ccc">
+                        ID: [[item.id]], ORDER: [[item.order]],
+                        <a href="[[ item.url ]]">[[ item.title ]]</a>,
+                        TYPE: [[ item.type ]]
+                        <a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="confirmRemoveFromLink(removeFromLink,item,'/get/fromlink/'+item.id)">
+                <span class="glyphicon glyphicon-remove"></span></a>
+                        <a ng-show="item.status==1" class="pull-right btn btn-success btn-xs" data-nodrag ng-click="turnOffOn($event,item)">
+                            <span class="glyphicon glyphicon-ok"></span></a>
+                        <a ng-show="item.status==0" class="pull-right btn btn-warning btn-xs" data-nodrag ng-click="turnOffOn($event,item)">
+                            <span class="glyphicon glyphicon-ban-circle"></span></a>
+                        <a class="pull-right btn btn-primary btn-xs" data-nodrag ng-click="editText($event,item)">
+                            <span class="glyphicon glyphicon-edit"></span></a>
+                    </div>
+
+                </div>
+            </div>
+
+            <hr>
+
+            <button
+                    type="button"
+                    ng-if="link_id!=null"
+                    ng-click="saveOrderData()"
+                    class="btn btn-warning btn-full-length"
+            >
+                Zapisz kolejność artykułów
+            </button>
+
+
+        </div>
+
+
+        <div ng-if="editlink.template.params.is_archive_content" ng-init="">
+
+            <div class="alert alert-info">
+                <span class="glyphicon glyphicon-link" aria-hidden="true"></span> Filtr wybranych kategorii (Artykułów)
+            </div>
+
+
+            <ui-select
+                    multiple
+                    ng-model="edited_params.categories"
+                    theme="bootstrap"
+                    ng-disabled="false"
+                    sortable="true"
+                    close-on-select="true"
+                    style="width: 100%;"
+                    title="Single property binding with async data"
+            >
+                <ui-select-match
+                        placeholder="">
+                    <span class="big-label">[[ $item.name ]]</span>
+                </ui-select-match>
+
+                <ui-select-choices
+                        repeat="category.id as category in categories | propsFilter: {name: $select.search}"
+                >
+
+                    <h4 class="select-suggest-h4">[[ category.name ]]</h4>
+
+                </ui-select-choices>
+            </ui-select>
+
+
+        </div>
+
+
+
+    </div>
+
+</div>
+

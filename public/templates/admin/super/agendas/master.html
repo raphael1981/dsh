@@ -1,0 +1,48 @@
+<div class="row" ng-init="initData()">
+    <div class="col-xs-12 col-sm-12 col-md-3">
+        <div show-search-criteria></div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-9">
+        <div
+                class="row"
+                ng-repeat="el in elements"
+        >
+            <div class="col-xs-12 col-sm-12 col-md-2">
+                <img
+                        src="/image/[[ el.image ]]/[[ el.disk ]]/[[ el.image_path ]]"
+                        class="img-responsive"
+                        ng-if="el.image!=null"
+                >
+                <span ng-if="el.image==null">
+                    Brak obrazka
+                </span>
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-5">
+                <h4>
+                    <a href="#!/edit/[[ el.id ]]">
+                        [[ el.title ]]
+                    </a>
+                </h4>
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-2">
+                <div status-btn-in-list="[[ el.status ]]" elementid="[[ el.id ]]"></div>
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-3">
+                <!--<button class="btn btn-danger" ng-click="deleteThisElement(el.id)">-->
+                <button class="btn btn-danger" ng-click="confirmRemove(deleteThisElement, el)">
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                </button>
+            </div>
+
+            <div class="col-xs-12 col-sm-12">
+                <hr>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div show-pagination></div>

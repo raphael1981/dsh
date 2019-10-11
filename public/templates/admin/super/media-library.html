@@ -1,0 +1,116 @@
+<div class="media-show">
+
+    <div class="row">
+
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div ng-if="viewtype=='folder'">
+                <div class="row">
+                    <div
+                            class="col-xs-12 col-sm-12 col-md-3"
+                            ng-repeat="file in folderfiles"
+                            ng-init="mediaconfig[$index]={
+                                        maxWidth:file.size[0],
+                                        float:'none',
+                                        hideform:true
+                                        }"
+                    >
+                        <div class="vertical-view-image">
+                            <img
+                                    src="[[ file.request ]]"
+                                    class="img-responsive center-image"
+                                    ng-click="$parent.clickImageInLibrary(file,$index);$event.preventDefault()"
+                            >
+                        </div>
+
+                        <button
+                                class="btn btn-info btn-full-length btn-sm"
+                                ng-click="
+                                    $event.preventDefault();
+                                    setAsIntroImage(file);
+                                "
+                        >
+                            Ustaw jako obrazek wprowadzenia
+                        </button>
+
+
+                        <button
+                                class="btn btn-warning btn-full-length btn-sm"
+                                ng-click="
+                            $event.preventDefault();
+                            (mediaconfig[$index].hideform==false)?(mediaconfig[$index].hideform=true):(mediaconfig[$index].hideform=false)
+                        "
+                        >
+                            Konfiguruj zdjęcie
+                        </button>
+
+                        <form name="cssconfig" class="text-center" ng-hide="mediaconfig[$index].hideform">
+                            <label>
+                                Maxymalna szerokość (px)
+                            </label>
+
+                            <div
+                                    class="input-group"
+                                    ng-model="mediaconfig[$index].validmaxwidth"
+                                    ng-init="mediaconfig[$index].validmaxwidth=mediaconfig[$index].maxWidth"
+                            >
+                              <span class="input-group-btn">
+                                  <button
+                                          type="button"
+                                          class="btn btn-default btn-number btn-sm"
+                                          ng-mousedown="changeMaxWidthMouseDown('minus',$index)"
+                                          ng-mouseup="changeMaxWidthMouseUp($index)"
+                                  >
+                                      <i class="fa fa-minus" aria-hidden="true"></i>
+                                  </button>
+                              </span>
+
+                                <input
+                                        type="text"
+                                        name="mwidth"
+                                        disabled placeholder="Maxymalna szerokość"
+                                        class="form-control input-number input-sm"
+                                        ng-model="mediaconfig[$index].maxWidth"
+                                        ng-pattern="/^[0-9]+$/"
+                                >
+
+                                  <span class="input-group-btn">
+                                      <button
+                                              type="button"
+                                              class="btn btn-default btn-number btn-sm"
+                                              ng-mousedown="changeMaxWidthMouseDown('plus',$index)"
+                                              ng-mouseup="changeMaxWidthMouseUp($index)"
+                                      >
+                                          <i class="fa fa-plus" aria-hidden="true"></i>
+                                      </button>
+                                  </span>
+                            </div>
+
+
+                            <label>
+                                <select class="form-control input-sm" ng-model="mediaconfig[$index].float">
+                                    <option value="none">none</option>
+                                    <option value="image-left">Wyrównaj do lewej</option>
+                                    <option value="image-right">Wyrównaj do prawej</option>
+                                </select>
+                            </label>
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+
+            <div ng-if="viewtype=='file'">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-3">
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>

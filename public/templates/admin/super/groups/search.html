@@ -1,0 +1,23 @@
+<form ng-submit="searchSubmit()">
+    <div class="input-group">
+        <span class="input-group-addon" id="basic-addon1">
+            <i class="fa fa-search" aria-hidden="true"></i>
+        </span>
+        <input
+                type="text"
+                class="form-control"
+                placeholder="Wpisz frazę"
+                aria-describedby="basic-addon1"
+                ng-model="frase"
+        >
+    </div>
+    <div class="checkbox">
+        <label class="col-xs-12 col-sm-12 col-md-6">
+            <input type="checkbox" ng-model="searchcolumns.name"> Nazwa
+        </label>
+    </div>
+    <div class="clearfix"></div>
+    <hr>
+
+    <button type="submit" class="btn btn-primary btn-full-length">Szukaj</button>
+</form>

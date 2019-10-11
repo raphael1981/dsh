@@ -1,0 +1,63 @@
+<div class="row" ng-init="initData()">
+    <div class="col-xs-12 col-sm-12 col-md-3">
+        <div show-search-criteria></div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-9">
+        <div
+                class="row"
+                ng-repeat="el in elements"
+        >
+            <div class="col-xs-12 col-sm-12 col-md-2">
+                <img
+                        src="/image/[[ el.image ]]/[[ el.disk ]]/[[ el.image_path ]]"
+                        class="img-responsive"
+                        ng-if="el.image!=null"
+                >
+                <span ng-if="el.image==null">
+                    Brak obrazka
+                </span>
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-4">
+                <h4>
+                    <a href="#!/edit/[[ el.id ]]">
+                        [[ el.title ]]
+                    </a>
+                </h4>
+                <h5 style="font-size:16px">
+                  <b>
+                  [[ el.published_at | dateView ]]
+                  </b>
+                </h5>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-2">
+                <div status-btn-in-list="[[ el.status ]]" elementid="[[ el.id ]]" ng-if="el.archived==0"></div>
+                <button type="button" class="btn btn-default" ng-if="el.archived==1" disabled="true">
+                    <i class="fa fa-ban" aria-hidden="true" ng-if="el.status==0"></i>
+                    <i class="fa fa-check" aria-hidden="true" ng-if="el.status==1"></i>
+                </button>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-2">
+                <button type="button" class="btn btn-warning" ng-if="el.archived==0" ng-click="changeArchiveStatus(el.id,1,$index)">
+                    <i class="fa fa-archive" aria-hidden="true"></i> Przenieś do archiwum
+                </button>
+                <button type="button" class="btn btn-default" ng-if="el.archived==1" ng-click="changeArchiveStatus(el.id,0,$index)">
+                    <i class="fa fa-archive" aria-hidden="true"></i> Zarchiwizowany
+                </button>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-2">
+                <!--<div status-btn-in-list="[[ el.status ]]" elementid="[[ el.id ]]"></div>-->
+                <button class="btn btn-danger" ng-click="confirmRemove(deleteThisElement, el)">
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                </button>
+            </div>
+
+            <div class="col-xs-12 col-sm-12">
+                <hr>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div show-pagination></div>

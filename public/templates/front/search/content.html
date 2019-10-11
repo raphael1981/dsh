@@ -1,0 +1,30 @@
+<div class="search-beam-form" ng-init="initData()">
+    <div class="dsh-container none-background-cnt">
+
+        <div class="gird-col out-off full-width-gird transparent-col">
+            <div class="col-half-beam-search">
+                <h3 class="title-search">WYNIKI WYSZUKIWANIA</h3>
+            </div>
+            <div class="col-half-beam-search">
+
+                <form class="form-horizontal" ng-submit="searchIndexResult()">
+
+                        <div class="form-group">
+                            <div class="col-md-4">
+                                <input
+                                        name="search"
+                                        type="text"
+                                        ng-model="search"
+                                        placeholder="Wpisz frazę"
+                                >
+                            </div>
+                        </div>
+
+                    </fieldset>
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</div>

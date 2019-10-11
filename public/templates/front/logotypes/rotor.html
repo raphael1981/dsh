@@ -1,0 +1,41 @@
+<style>
+    .repeated-item.ng-enter, .repeated-item.ng-move {
+        transition: all 7s linear;
+        opacity: 0;
+    }
+    .logo-track{
+        height: 90px;
+        overflow: hidden;
+        text-align: left;
+    }
+
+    .repeated-item{
+        display: inline-block;
+    }
+
+    .repeated-item img{
+        /*width: 200px;*/
+        height: 100px;
+        padding: 10px;
+    }
+
+</style>
+
+<h4 class="logo-title">{{title}}</h4>
+
+<div class="logo-track" ng-init="initRotor()">
+
+    <div ng-repeat="item in items" class="repeated-item">
+        <a href="{{ item.link }}" target="_blank">
+            <img src="{{ item.logo_uri }}" class="img-responsive">
+        </a>
+    </div>
+
+</div>
+
+
+<div class="mobile-logo-view">
+    <div class="logotype-element" ng-repeat="l in logotypes.logotypes">
+        <img src="{{l.logo_uri}}" class="img-responsive">
+    </div>
+</div>

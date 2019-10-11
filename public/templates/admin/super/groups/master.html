@@ -1,0 +1,24 @@
+<div class="row" ng-init="initData()">
+    <div class="col-xs-12 col-sm-12 col-md-3">
+        <div show-search-criteria></div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-9">
+        <div
+                class="row"
+                ng-repeat="el in elements"
+        >
+            <div class="col-xs-12 col-sm-12 col-md-7">
+                <h4>[[ el.name ]]</h4>
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-5">
+
+            </div>
+
+
+        </div>
+    </div>
+
+</div>
+
+<div show-pagination></div>

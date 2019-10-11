@@ -1,0 +1,70 @@
+<div class="over-media-cloud" ng-class="hidemediacloud" ng-click="hidemediacloud='hidden'"></div>
+
+<div class="media-cloud" ng-class="hidemediacloud">
+    <div class="media-inside-cloud">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-6">
+                <button
+                        class="btn btn-default btn-full-length"
+                        ng-class="btn_disk"
+                        ng-init="btn_disk='active'"
+                        ng-click="btn_database='';btn_disk='active';view_media_disk='';view_media_database='hidden'"
+                >
+                    Obrazki w katalogach
+                </button>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-6">
+                <button class="btn btn-default btn-full-length"
+                        ng-class="btn_database"
+                        ng-click="btn_database='active';btn_disk='';view_media_disk='hidden';view_media_database=''"
+                >
+                    Obrazki w bazie danych
+                </button>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="row" ng-class="view_media_disk" ng-init="view_media_disk=''">
+            <div class="col-xs-12 col-sm-4">
+                <div tree-view="structure" tree-view-options="options"></div>
+            </div>
+
+            <div class="col-xs-8 col-sm-8">
+
+                <div class="row">
+                    <div
+                            class="col-xs-12 col-sm-12 col-md-4"
+                            ng-repeat="file in folderfiles"
+                    >
+                        <div class="vertical-view-image">
+                            <img
+                                    src="[[ file.request ]]"
+                                    class="img-responsive center-image"
+                                    ng-click="$parent.clickImageInLibrary(file,$index);$event.preventDefault()"
+                            >
+                        </div>
+
+                        <button
+                                class="btn btn-info btn-full-length btn-sm"
+                                ng-click="
+                                    $event.preventDefault();
+                                    setAsIntroImage(file);
+                                "
+                        >
+                            Ustaw jako obrazek wprowadzenia
+                        </button>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row" ng-class="view_media_database" ng-init="view_media_database='hidden'">
+            <div class="col-xs-12 col-sm-12">
+                ddd
+            </div>
+        </div>
+    </div>
+</div>

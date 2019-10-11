@@ -1,0 +1,112 @@
+.singleColumnGird(@leftmargin:false){
+  width: calc(~'(100% - 129px)/3'); //width: calc(~'(100% - 128px)/3');
+  float: left;
+  & when (@leftmargin = true) {
+    margin-left: 64px;
+  }
+
+  & when (@leftmargin = false) {
+    margin-left: 0;
+  }
+}
+
+.singleColumnGirdOutOff(@leftmargin:false){
+  width: calc(~'((100% - 225px)/3)'); //width: calc(~'((100% - 224px)/3)');
+  float: left;
+  & when (@leftmargin = true) {
+    margin-left: 64px;
+  }
+
+  & when (@leftmargin = false) {
+    margin-left: 0;
+  }
+  margin-bottom: 64px;
+}
+
+.doubleColumnGird(@leftmargin:true){
+  width: calc(~'(((100% - 129px)/3)*2) + 64px'); //width: calc(~'(((100% - 128px)/3)*2) + 64px');
+  float: left;
+  & when (@leftmargin = true) {
+    margin-left: 64px;
+  }
+
+  & when (@leftmargin = false) {
+    margin-left: 0;
+  }
+}
+
+.doubleColumnGirdMargin48(@leftmargin:true){
+  width: calc(~'(((100% - 129px)/3)*2)'); //width: calc(~'(((100% - 128px)/3)*2)');
+  float: left;
+  & when (@leftmargin = true) {
+    margin-left: 48px;
+  }
+
+  & when (@leftmargin = false) {
+    margin-left: 0;
+  }
+}
+
+.singleColumnGirdMargin48(@leftmargin:true){
+  width: calc(~'(((100% - 128px)/3))'); //width: calc(~'(((100% - 128px)/3)*2)');
+  float: left;
+  & when (@leftmargin = true) {
+    margin-left: 48px;
+  }
+
+  & when (@leftmargin = false) {
+    margin-left: 0;
+  }
+}
+
+.oneColumnGirdMargin48(@leftmargin:true){
+  width: calc(~'(100% - 97px)'); //width: calc(~'(100% - 96px)');
+  float: left;
+  & when (@leftmargin = true) {
+    margin-left: 48px;
+  }
+
+  & when (@leftmargin = false) {
+    margin-left: 0;
+  }
+}
+
+
+.oneColumnGirdMargin64(@leftmargin:true){
+  width: calc(~'(100% - 128px)'); //width: calc(~'(100% - 129px)');
+  float: left;
+  & when (@leftmargin = true) {
+    margin-left: 64px;
+  }
+
+  & when (@leftmargin = false) {
+    margin-left: 0;
+  }
+}
+
+
+.singleColumnGirdMargin64(@leftmargin:true){
+  width: calc(~'(((100% - 225px)/3))'); //width: calc(~'(((100% - 224px)/3))');
+  float: left;
+  & when (@leftmargin = true) {
+    margin-left: 64px;
+  }
+
+  & when (@leftmargin = false) {
+    margin-left: 0;
+  }
+}
+
+
+.halfColumnGirdMargin64(@leftmargin:true){
+  width: calc(~'(100% - 161px)/2'); //width: calc(~'(100% - 160px)/2');
+  float: left;
+  & when (@leftmargin = true) {
+    margin-left: 64px;
+  }
+
+  & when (@leftmargin = false) {
+    margin-left: 0;
+  }
+}
+

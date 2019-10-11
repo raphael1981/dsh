@@ -1,0 +1,167 @@
+<button
+        class="btn btn-danger btn-lg btn-save-update"
+        ng-click="saveNewPublication()"
+>
+    <i class="fa fa-floppy-o" aria-hidden="true"></i> Zapisz
+</button>
+<div class="loading" ng-class="loading" ng-init="loading='hidden'">
+    <img src="/images/loading.svg" style="width: 100px">
+</div>
+
+<section class="panel">
+    <div
+            class="row"
+            ng-init="initData()"
+    >
+
+
+        <div class="col-xs-12 col-sm-8">
+
+            <div class="row">
+
+                <div class="col-xs-12 col-sm-12 col-md-12">
+
+
+                    <div class="page-header">
+                        <h4>Wstęp do ogłoszenia</h4>
+                    </div>
+                    <textarea ckeditor="editorOptions" ng-model="data.intro"></textarea>
+
+
+                    <div class="page-header">
+                        <h4>Tekst pełnej odsłony ogłoszenia</h4>
+                    </div>
+                    <textarea ckeditor="editorOptions" ng-model="data.content"></textarea>
+
+
+                    <h4>Profil graficzny</h4>
+                    <div class="view-profiles">
+                        <div style="background-color: #[[ data.view_profile.color.rgb ]];width:350px;height:220px;position: relative" ng-if="data.view_profile!=null">
+                            <img src="[[ data.view_profile.icon ]]" class="img-responsive">
+                            <div style="position: absolute;left: 0;bottom: 0;width: 100%;height: 50px;padding-top:15px;background: rgba(0,0,0,0.3);text-align: center;color:#FFF;font-size: 18px;">
+                                [[ data.view_profile.name ]]
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <div>
+                            <ul class="list-inline">
+                                <li ng-repeat="vp in viewprofiles">
+                                    <div style="background-color: #[[ vp.params.color.rgb ]];width:180px;height:180px;position: relative">
+                                        <img src="[[ vp.params.icon ]]" class="img-responsive">
+                                        <div style="position: absolute;left: 0;bottom: 0;width: 100%;height: 50px;padding-top:15px;background: rgba(0,0,0,0.3);text-align: center;color:#FFF;font-size: 18px;">
+                                            [[ vp.profile_name ]]
+                                        </div>
+                                        <a
+                                                href="#"
+                                                ng-click="$event.preventDefault();changeViewProfile(vp)"
+                                                style="position: absolute; z-index:22; width: 100%; height: 100%;left:0 ; top: 0">
+
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="col-xs-12 col-sm-12">
+                <div class="page-header">
+                    <h3>Tytuł ogłoszenia</h3>
+                </div>
+
+                <input
+                        type="text"
+                        name="mwidth"
+                        placeholder="Tytuł ogłoszenia"
+                        class="form-control"
+                        ng-model="data.title"
+                        ng-change="checkIsTitle()"
+                >
+                <div
+                        class="alert alert-danger"
+                        ng-if="!if_title_valid"
+                >
+                    Tytuł ogłoszenia jest wymagany
+                </div>
+            </div>
+
+
+
+                <div class="col-xs-12 col-sm-12">
+                    <hr>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <button
+                                type="button"
+                                class="btn btn-primary btn-full-length"
+                                ng-click="openAttachCloud()"
+                        >
+                            Wybierz załączniki
+                        </button>
+                    </div>
+                    <div class="col-md-12">
+
+                        <hr>
+
+                        <div class="row" ng-if="attachments.length>0">
+                            <div class="col-xs-12 col-sm-12 col-md-2">
+
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-9">
+                                Nazwa opisowa pliku
+                            </div>
+                        </div>
+
+
+
+                        <div class="row" ng-repeat="attach in attachments">
+
+                            <div class="col-xs-12 col-sm-12 col-md-2">
+                                <img src="[[ attach.icon ]]" class="img-responsive">
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-8">
+                                <a href="#" editable-text="attach.basename" e-label="">[[ attach.basename || 'empty' ]]</a>
+                                <br>
+                                <cite>[[ attach.name ]]</cite>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-2">
+                                <button
+                                        class="btn btn-sm btn-danger"
+                                        ng-click="removeAttach($index)"
+                                >
+                                    <i class="fa fa-times" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <hr>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
+
+    <div attachment-library></div>
+
+
+</section>

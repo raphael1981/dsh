@@ -1,0 +1,140 @@
+<div class="cloud-inside">
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-6">
+            <h3>Szukanie po tytule</h3>
+            <form class="form-inline" ng-submit="$event.preventDefault()">
+                <div class="form-group">
+                    <input
+                            type="text"
+                            class="form-control"
+                            placeholder="Wpisz frazę"
+                            ng-model="frase"
+                            ng-change="searchAgendas()"
+                    >
+                </div>
+            </form>
+
+            <hr>
+
+            <div class="row">
+                <div
+                        class="col-xs-12 col-sm-12"
+                        ng-repeat="ag in agendas"
+                >
+
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-2">
+                            <div ng-if="ag.image!=null">
+                                <img
+                                        src="/image/[[ ag.image ]]/[[ ag.disk ]]/[[ ag.image_path ]]/350"
+                                        class="img-responsive"
+                                >
+                            </div>
+                            <div ng-if="ag.image==null">
+                                <div class="box-for-icon" style="background: #[[ ag.categories[0].params.color ]];">
+                                    <img
+                                            src="[[ ag.categories[0].params.icon ]]"
+                                            class="img-responsive"
+                                    >
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-6">
+                            <h4>
+                                [[ ag.title ]]
+                            </h4>
+                            <span style="font-size: 1em; font-style:italic">[[ag.begin]]</span>
+                            <span style="font-size: 1em; font-style:italic" ng-if="ag.end != ag.begin"> - [[ag.end]]</span>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-2">
+                            <h5>
+                                <span class="label label-info">[[ ag.language.name ]]</span>
+                            </h5>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-2">
+                            <button
+                                    type="button"
+                                    class="btn btn-success"
+                                    ng-click="addAgenda(ag)"
+                            >
+                                <i class="fa fa-plus-square" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-6">
+
+            <div class="view-box" ng-if="collection.agenda!=null">
+
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-4">
+                        <div ng-if="collection.agenda.image!=null">
+                            <img src="/image/[[ collection.agenda.image ]]/[[ collection.agenda.disk ]]/[[ collection.agenda.image_path ]]/600" class="img-responsive">
+                        </div>
+                        <div ng-if="collection.agenda.image==null">
+
+                            <div class="box-for-icon" style="background: #[[ $parent.agenda.categories[0].params.color ]];">
+                                <img src="[[ $parent.collection.agenda.categories[0].params.icon ]]" class="img-responsive">
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-6">
+                        <div class="image">
+
+                            <div class="date">
+                                <h3>[[ collection.agenda.begin ]] [[ agenda.end ]]<h3>
+                            </div>
+
+                            <div class="title">
+                                <h4>[[ collection.agenda.title ]]</h4>
+                            </div>
+
+                            <div class="desc">
+                                [[ collection.agenda.intro ]]
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-2">
+                        <button
+                                type="button"
+                                class="btn btn-danger"
+                                ng-click="removeAgenda(ag)"
+                        >
+                            <i class="fa fa-minus-square" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-12">
+            <hr>
+            <button
+                    type="button"
+                    class="btn btn-primary btn-full-length"
+                    ng-click="saveLeadElementAgenda(collection.agenda,findkeyinfo)"
+            >
+                Zapisz zmiany
+            </button>
+        </div>
+    </div>
+
+</div>
+
+

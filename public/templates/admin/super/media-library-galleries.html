@@ -1,0 +1,51 @@
+<div class="media-show">
+
+    <div class="row">
+
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div ng-if="viewtype=='folder'">
+                <div class="row">
+                    <div
+                            class="col-xs-12 col-sm-12 col-md-3"
+                            ng-repeat="file in folderfiles"
+                            ng-init="mediaconfig[$index]={
+                                        maxWidth:file.size[0],
+                                        float:'none',
+                                        hideform:true
+                                        }"
+                    >
+                        <div class="vertical-view-image">
+                            <img
+                                    src="[[ file.request ]]"
+                                    class="img-responsive center-image"
+                                    ng-click="$parent.clickImageInLibrary(file,$index);$event.preventDefault()"
+                            >
+                        </div>
+
+                        <button
+                                type="button"
+                                class="btn btn-default btn-sm btn-full-length"
+                                ng-click="addImageToGalleryFromLib(file)"
+                        >
+                            Dodaj obrazek do galerii
+                        </button>
+
+
+                    </div>
+                </div>
+            </div>
+
+            <div ng-if="viewtype=='file'">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-3">
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>

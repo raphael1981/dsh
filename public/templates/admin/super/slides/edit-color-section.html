@@ -1,0 +1,34 @@
+<div class="row">
+
+    <div class="col-xs-12 col-sm-12">
+        <h3>[[ link.link.title ]]</h3>
+
+        <div ng-if="current_color!=null" style="width: 220px;height: 220px;background-color: #[[ current_color.rgb ]]"></div>
+        <hr>
+
+    </div>
+
+
+
+    <div class="col-xs-12 col-sm-12">
+        <ul class="list-inline">
+            <li ng-repeat="c in colors" style="background: #[[ c.rgb ]];margin: 3px;">
+                <a
+                        href="#"
+                        ng-click="$event.preventDefault();$parent.current_color=c"
+                        style="display: table;width: 120px;height: 120px"
+                >
+
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="col-xs-12 col-sm-12" ng-if="current_color!=null">
+        <button class="btn btn-primary btn-full-length" ng-click="$parent.setColorLink(id, current_color)">
+            Ustaw color sekcji
+        </button>
+    </div>
+
+
+</div>

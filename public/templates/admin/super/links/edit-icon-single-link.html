@@ -1,0 +1,33 @@
+<div class="row">
+
+    <div class="col-xs-12 col-sm-12">
+        <h3>[[ link.title ]]</h3>
+
+        <div ng-if="icon!=null" style="background-color: #[[ params.color.rgb ]];width: 250px;">
+            <img src="/[[ icon ]]"  style="max-width: 270px;">
+        </div>
+
+        <hr>
+
+    </div>
+
+
+
+    <div class="col-xs-12 col-sm-12">
+        <ul class="list-inline">
+            <li ng-repeat="ic in icons" style="background: #CCC">
+
+                <a href="#" ng-click="$event.preventDefault();$parent.icon=ic">
+                    <img src="/[[ ic ]]" class="img-responsive" style="max-width: 130px;">
+                </a>
+
+            </li>
+        </ul>
+    </div>
+    <div class="col-xs-12 col-sm-12" ng-if="icon!=null">
+        <button class="btn btn-primary btn-full-length" ng-click="$parent.setIconLink(id, icon)">
+            Ustaw ikonę linku
+        </button>
+    </div>
+
+</div>

@@ -1,0 +1,564 @@
+<button
+        class="btn btn-danger btn-lg btn-save-update"
+        ng-click="saveNewArticle()"
+>
+    <i class="fa fa-floppy-o" aria-hidden="true"></i> Aktualizuj
+</button>
+<div class="loading" ng-class="loading" ng-init="loading='hidden'">
+    <img src="/images/loading.svg" style="width: 100px">
+</div>
+
+
+
+<section class="panel">
+
+    <div class="row">
+        <div class="col-xs-12 col-ms-12">
+            <div class="alert alert-success" ng-class="added" ng-init="added='hidden'">
+                <i class="fa fa-exclamation-circle" aria-hidden="true"></i> Artykuł został dodany
+            </div>
+            <div class="alert alert-success" ng-class="updated" ng-init="updated='hidden'">
+                <i class="fa fa-exclamation-circle" aria-hidden="true"></i> Artykuł został zaktualizowany
+            </div>
+        </div>
+    </div>
+
+    <div
+            class="row"
+            ng-init="initData()"
+    >
+
+
+        <div class="col-xs-12 col-sm-12">
+
+            <div class="row">
+
+                <div class="col-xs-12 col-sm-12 text-center">
+
+                    <div class="page-header">
+                        <h4>
+                            <i class="fa fa-pencil-square" aria-hidden="true"></i>
+                            Wybierz rodzaj artykułu:
+                        </h4>
+                    </div>
+
+                    <label class="radio-inline">
+                        <input type="radio" name="atyp" ng-model="arttype" value="internal"> Wewnętrzny
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="atyp" ng-model="arttype" value="external"> Zewnętrzny
+                    </label>
+
+                </div>
+
+            </div>
+
+            <hr>
+
+        </div>
+
+        <div class="col-xs-12 col-sm-8">
+
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-3 col-editors">
+
+                    <div class="page-header">
+                        <h3 class="text-center"><i class="fa fa-cloud-upload" aria-hidden="true"></i> Upuść obrazki</h3>
+                    </div>
+
+                    <div
+                            ngf-drop
+                            ng-model="file"
+                            ngf-drag-over-class="dragover"
+                            ngf-multiple="false"
+                            ngf-allow-dir="true"
+                            accept="image/*"
+                            class="drop-box">
+
+                    </div>
+
+
+                    <!--<div class="progress">-->
+                        <!--<div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: [[ progress ]]%;">-->
+                            <!--[[ progress ]]%-->
+                        <!--</div>-->
+                    <!--</div>-->
+
+                    <div class="alert alert-info">
+                        Scieżka do upload'u obrazków <b>[[ upload_dir ]]</b>
+                    </div>
+
+
+                    <!--<div ng-if="uploaded!=null">-->
+
+                        <!--<div class="row">-->
+                            <!--<div class="col-xs-12 col-sm-12">-->
+                                <!--<div-->
+                                        <!--class="image-set-view"-->
+                                <!--&gt;-->
+
+                                    <!--<img src="[[ uploaded.request ]]" class="img-responsive center-image">-->
+
+                                    <!--<button class="btn btn-info btn-sm btn-full-length" ng-click="$parent.newartdata.intro_image=uploaded;$event.preventDefault();">-->
+                                        <!--Ilustracja wprowadzenia-->
+                                    <!--</button>-->
+
+                                <!--</div>-->
+                            <!--</div>-->
+
+                        <!--</div>-->
+
+                    <!--</div>-->
+
+
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-9">
+
+
+
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary btn-sm btn-full-length" data-toggle="modal" data-target="#myModal">
+                        Przypisz do pozycji na stronie
+                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title" id="myModalLabel">Drzewo linków</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <ul class="tree">
+                                        <node-tree children="tree"></node-tree>
+                                    </ul>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Zamknij</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <div class="page-header">
+                        <h4>Wstęp do artykułu</h4>
+                    </div>
+                    <textarea ckeditor="editorOptions" ng-model="newartdata.introtext"></textarea>
+                    <!--<wysiwyg-->
+                            <!--textarea-id="introtextID"-->
+                            <!--textarea-class="form-control"-->
+                            <!--textarea-height="100px"-->
+                            <!--textarea-name="textareaQuestion"-->
+                            <!--textarea-required-->
+                            <!--ng-model="newartdata.introtext"-->
+                            <!--enable-bootstrap-title="true"-->
+                            <!--textarea-menu="modelintro.menu"-->
+                            <!--textarea-custom-menu="modelshort.customMenu"-->
+                            <!--textarea-custom-functions="modelshort.customFunctions"></wysiwyg>-->
+
+
+                    <div ng-if="arttype=='internal'">
+                        <div class="page-header">
+                            <h4>Tekst pełnej odsłony artykułu</h4>
+                        </div>
+                        <textarea ckeditor="editorOptions" ng-model="newartdata.fulltext"></textarea>
+                        <!--<wysiwyg-->
+                                <!--textarea-id="fulltextID"-->
+                                <!--textarea-class="form-control"-->
+                                <!--textarea-height="600px"-->
+                                <!--textarea-name="textareaQuestion"-->
+                                <!--textarea-required-->
+                                <!--media-photo="[[ imagetoadd ]]"-->
+                                <!--ng-model="newartdata.fulltext"-->
+                                <!--enable-bootstrap-title="true"-->
+                                <!--textarea-menu="model.menu"-->
+                                <!--textarea-custom-menu="model.customMenu"-->
+                                <!--textarea-custom-functions="model.customFunctions"></wysiwyg>-->
+
+
+
+                    </div>
+
+                    <hr>
+
+                    <div
+                            class="alert alert-danger"
+                            ng-if="!if_viewprofile_valid"
+                    >
+                        Wybierz profil graficzny
+                    </div>
+
+
+                    <h4>Profil graficzny</h4>
+                    <div class="view-profiles">
+                        <div style="background-color: #[[ newartdata.view_profile.color.rgb ]];width:350px;height:220px;position: relative" ng-if="newartdata.view_profile!=null">
+                            <img src="[[ newartdata.view_profile.icon ]]" class="img-responsive">
+                            <div style="position: absolute;left: 0;bottom: 0;width: 100%;height: 50px;padding-top:15px;background: rgba(0,0,0,0.3);text-align: center;color:#FFF;font-size: 18px;">
+                                [[ newartdata.view_profile.name ]]
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <div>
+                            <ul class="list-inline">
+                                <li ng-repeat="vp in viewprofiles">
+                                    <div style="background-color: #[[ vp.params.color.rgb ]];width:180px;height:180px;position: relative">
+                                        <img src="[[ vp.params.icon ]]" class="img-responsive">
+                                        <div style="position: absolute;left: 0;bottom: 0;width: 100%;height: 50px;padding-top:15px;background: rgba(0,0,0,0.3);text-align: center;color:#FFF;font-size: 18px;">
+                                            [[ vp.profile_name ]]
+                                        </div>
+                                        <a
+                                                href="#"
+                                                ng-click="$event.preventDefault();changeViewProfile(vp)"
+                                                style="position: absolute; z-index:22; width: 100%; height: 100%;left:0 ; top: 0">
+
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+            <div class="page-header">
+                <h4><i class="fa fa-pencil-square" aria-hidden="true"></i> Typ artykułu: <span class="label label-info" ng-if="arttype=='internal'">Wewnętrzny</span> <span class="label label-info" ng-if="arttype=='external'">Zewnętrzny</span></h4>
+            </div>
+
+            <div class="page-header">
+                <h3>Tytuł artykułu</h3>
+            </div>
+
+            <input
+                    type="text"
+                    name="mwidth"
+                    placeholder="Tytuł artykułu"
+                    class="form-control"
+                    ng-model="newartdata.title"
+                    ng-change="checkIsTitle()"
+            >
+            <div
+                    class="alert alert-danger"
+                    ng-if="!if_title_valid"
+            >
+                Tytuł artykułu jest wymagany
+            </div>
+
+            <div class="page-header" ng-if="arttype=='external'">
+                <h3>Zewnętrzny link</h3>
+            </div>
+
+            <div
+                    ng-if="arttype=='external'"
+                    class="alert alert-info"
+            >
+                Format (np. <b>http://domena.pl</b> lub <b>https://domena.pl</b>)
+            </div>
+            <div class="form-group" ng-class="url_class_valid">
+                <input
+                        type="text"
+                        name="mexturl"
+                        placeholder="Link zewnętrzny"
+                        class="form-control"
+                        ng-model="newartdata.external_url"
+                        ng-change="checkExternalLink()"
+                        ng-if="arttype=='external'">
+            </div>
+
+            <div
+                    class="alert alert-danger"
+                    ng-if="!if_exurl_valid"
+            >
+                Podaj link zewnętrzny lub jego prawidłową formę
+            </div>
+
+
+            <h4>Ilustracja wprowadzenia</h4>
+
+
+            <div class="row">
+
+                <div class="col-xs-12 col-sm-12 col-md-12"  ng-if="newartdata.intro_image!=null">
+                    <img src="[[ newartdata.intro_image.request_uncomplete ]]300" class="img-responsive thumbnail center-image">
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12">
+
+
+                    <button
+                            ng-if="newartdata.intro_image!=null"
+                            class="btn btn-danger btn-sm btn-full-length"
+                            ng-click="newartdata.intro_image=null"
+                    ><i class="fa fa-times" aria-hidden="true"></i> Usuń zdjęcie wprowadzenia
+                    </button>
+
+
+                    <hr>
+
+                    <h4>Autor - w przypadku publikacji (opcjonalny)</h4>
+
+                    <div class="form-group">
+
+                            <input class="form-control"
+                                   name="author"
+                                   ng-model="newartdata.author"
+                                   type="text">
+                    </div>
+
+                    <hr>
+
+
+                    <h4>Data publikacji</h4>
+
+                    <div class="form-group">
+
+                            <input class="form-control"
+                                   ng-model="newartdata.published_at"
+                                   format="DD-MM-YYYY"
+                                   ng-model-options="{ updateOn: 'blur' }"
+                                   placeholder="Wybierz datę publikacji"
+                                   moment-picker="newartdata.published_at" locale="pl">
+                    </div>
+
+                    <div
+                            class="alert alert-danger"
+                            ng-if="!if_published_at_valid"
+                    >
+                        Wybierz datę publikacji
+                    </div>
+
+                    <hr>
+
+                    <h4>Kategorie</h4>
+
+
+                    <ui-select
+                            multiple
+                            ng-model="newartdata.categories"
+                            theme="bootstrap"
+                            ng-disabled="false"
+                            sortable="true"
+                            close-on-select="true"
+                            style="width: 100%;"
+                            title="Single property binding with async data"
+                    >
+                        <ui-select-match
+                                placeholder="">
+                            <span class="big-label">
+                                [[ $item.name ]]
+                            </span>
+                        </ui-select-match>
+
+                        <ui-select-choices
+                                repeat="category.id as category in categories | propsFilter: {name: $select.search}"
+                        >
+
+                            <blockquote>
+                                <h3 class="select-suggest-h4">[[ category.name ]]</h3>
+                                <footer>
+                                                <span ng-repeat="l in category.relations">
+                                                    [[ l.title ]]&nbsp;
+                                                </span>
+                                </footer>
+                            </blockquote>
+
+                        </ui-select-choices>
+                    </ui-select>
+
+
+
+
+                    <hr>
+                    <h4>Galerie zdjeć</h4>
+                    <ui-select
+                            multiple
+                            ng-model="newartdata.galleries"
+                            theme="bootstrap"
+                            ng-disabled="false"
+                            sortable="true"
+                            close-on-select="true"
+                            style="width: 100%;"
+                            title="Single property binding with async data"
+                    >
+                        <ui-select-match
+                                placeholder="">
+                            <span class="big-label">[[ $item.title ]]</span>
+                        </ui-select-match>
+
+                        <ui-select-choices
+                                repeat="gallery.id as gallery in galleries | propsFilter: {title: $select.search}"
+                        >
+
+                            <h4 class="select-suggest-h4">[[ gallery.title ]]</h4>
+
+                        </ui-select-choices>
+                    </ui-select>
+
+                </div>
+
+                <div class="col-md-12">
+
+                    <div class="gallery-fast-view" ng-repeat="gall in newartdata.galleries">
+                        <div gallery-show="[[ gall ]]"></div>
+                    </div>
+
+                </div>
+
+                <div class="col-xs-12 col-sm-12">
+                    <hr>
+                </div>
+
+
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <button
+                                    type="button"
+                                    class="btn btn-primary btn-full-length"
+                                    ng-click="openAttachCloud()"
+                            >
+                                Wybierz załączniki
+                            </button>
+                        </div>
+                        <div class="col-md-12">
+
+                            <hr>
+
+                            <div class="row" ng-if="attachments.length>0">
+                                <div class="col-xs-12 col-sm-12 col-md-2">
+
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-9">
+                                    Nazwa opisowa pliku
+                                </div>
+                            </div>
+
+
+
+                            <div class="row" ng-repeat="attach in attachments">
+
+                                <div class="col-xs-12 col-sm-12 col-md-2">
+                                    <img src="[[ attach.icon ]]" class="img-responsive">
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-8">
+                                    <a href="#" editable-text="attach.basename" e-label="">[[ attach.basename || 'empty' ]]</a>
+                                    <br>
+                                    <cite>[[ attach.name ]]</cite>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-2">
+                                    <button
+                                            class="btn btn-sm btn-danger"
+                                            ng-click="removeAttach($index)"
+                                    >
+                                        <i class="fa fa-times" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-12">
+                                    <hr>
+                                </div>
+
+                            </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <div attachment-library></div>
+    <div admin-rotors-select-exits logotypes="newartdata.logotypes"></div>
+
+    <div class="modal-media hidden" id="modal-media-lib">
+        <h4>Zbiór zdjeć</h4>
+        <div class="scroll-media-view">
+            <div class="row">
+                <div class="col-xs-12 col-sm-5">
+                    <div tree-view="structure" tree-view-options="options"></div>
+                </div>
+                <div class="col-xs-12 col-sm-7">
+                    <div media-library></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+
+
+<div ng-if="show_crop_cloud" class="upload-screen cloud-for-crop">
+    <div class="overload-crop-cloud" ng-click="$parent.show_crop_cloud=false"></div>
+    <div class="inside-crop-cloud">
+        <label class="radio-inline">
+            <input type="radio" name="cropmode" ng-model="$parent.cropindex" ng-value="0" ng-checked> Landscape
+        </label>
+        <label class="radio-inline">
+            <input type="radio" name="cropmode" ng-model="$parent.cropindex" ng-value="1"> Portret
+        </label>
+        <label class="radio-inline">
+            <input type="radio" name="cropmode" ng-model="$parent.cropindex" ng-value="2"> Panorama
+        </label>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-6">
+                <canvas
+                        width="500"
+                        height="500"
+                        id="canvas"
+                        style="background:#C0C0C0; display: block; margin: auto"
+                        image-cropper
+                        image="file | ngfDataUrl"
+                        cropped-image="cropper.croppedImage"
+                        crop-width="$parent.cropcurrent.width"
+                        crop-height="$parent.cropcurrent.height"
+                        keep-aspect="true"
+                        touch-radius="30"
+                        crop-area-bounds="bounds"></canvas>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-6">
+                <div ng-show="cropper.croppedImage!=null" class="crop-view">
+                    <img ng-src="[[ cropper.croppedImage ]]" class="img-responsive" />
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-12">
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: [[ progress ]]%;">
+                        [[ progress ]]%
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <hr>
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-12">
+                <button class="btn btn-success btn-full-length" ng-click="$parent.uploadFilesIntroImage(cropper.croppedImage);">
+                    Wgraj obrazek i ustaw jako ilustrację wprowadzenia
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<update-rotor-data></update-rotor-data>

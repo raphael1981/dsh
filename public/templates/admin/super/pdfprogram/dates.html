@@ -1,0 +1,51 @@
+<div class="pdf-dates-select">
+    <ul class="years-elements">
+
+        <li class="arrow">
+            <a href="#" ng-click="$event.preventDefault();changeYearLine('prev')">
+                <i class="fa fa-arrow-left" aria-hidden="true"></i>
+            </a>
+        </li>
+
+        <li
+                class="element"
+                ng-repeat="year in years"
+        >
+            <a href="#" ng-if="year.active" class="active">
+                [[ year.y ]]
+            </a>
+            <a href="#" ng-if="!year.active" ng-click="$event.preventDefault();changeYearByClick(year,$index);">
+                [[ year.y ]]
+            </a>
+
+        </li>
+
+        <li class="arrow">
+            <a href="#" ng-click="$event.preventDefault();changeYearLine('next')">
+                <i class="fa fa-arrow-right" aria-hidden="true"></i>
+            </a>
+        </li>
+
+    </ul>
+
+
+
+    <ul class="months-elements">
+
+
+        <li
+                class="element"
+                ng-repeat="month in months"
+        >
+            <a href="#" ng-if="month.active" class="active">
+                [[ month.name ]]
+            </a>
+            <a href="#" ng-if="!month.active" ng-click="$event.preventDefault();changeMonthByClick(month);">
+                [[ month.name ]]
+            </a>
+
+        </li>
+
+
+    </ul>
+</div>

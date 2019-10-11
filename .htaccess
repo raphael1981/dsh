@@ -1,0 +1,9 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine on
+    RewriteCond %{HTTP_HOST} ^www.dsh.waw.pl(.*) [NC]
+    RewriteRule ^(.*)$ http://dsh.waw.pl/$1 [R=301,L]
+    RewriteCond %{REQUEST_URI} !^public
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>
+
+AddType application/x-httpd-php72 .php

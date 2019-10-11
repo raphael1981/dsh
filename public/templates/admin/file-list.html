@@ -1,0 +1,22 @@
+<h4 class="text-info" style="letter-spacing:1px">
+    <i class="fa fa-folder" aria-hidden="true"></i> [[ el.path ]]
+</h4>
+<hr>
+<div class="row">
+    <div class="col-md-6" ng-repeat="f in el.files" style="text-align: center;">
+
+        <div style="border: 1px solid #CCC;padding: 5px;margin: 3px;">
+            <p style="word-break: break-all; font-size: 15px;" class="text-success">
+                <i class="fa fa-file" aria-hidden="true"></i>
+                [[ f.name ]]
+                <a href="/media/[[ f.name ]]" target="_blank">
+                    <i class="fa fa-eye" aria-hidden="true"></i>
+                </a>
+            </p>
+            <button type="button" class="btn btn-sm btn-danger" ng-click="trashFile(f,$index)">
+                <i class="fa fa-trash" aria-hidden="true"></i> Przenieś do kosza
+            </button>
+        </div>
+
+    </div>
+</div>

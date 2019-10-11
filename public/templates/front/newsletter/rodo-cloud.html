@@ -1,0 +1,96 @@
+<div class="news-letter-overload" ng-init="initData(true)" ng-if="isshow" ng-click="$parent.isshow=false"></div>
+<div ng-if="isshow" class="newsletter-popup">
+    <div class="inside-cloud">
+        <div class="button-close" ng-click="$parent.isshow=false">
+            X
+        </div>
+        <div class="head-of-form">
+            <h4>Zapisz się na newsletter</h4>
+        </div>
+        <div class="desc-of-form">
+            <div class="desc-col">
+                Chcesz być informowany o wszystkich wydarzeniach Domu Spotkań z Historią? Wypełnij formularz, żeby zapisać się na newsletter. Pamiętaj, że zawsze możesz aktualizować dane lub zrezygnować z subskrypcji
+            </div>
+        </div>
+        <div class="form-elements">
+
+            <div class="cloud-raport-newsletter" ng-if="show_raport_email_cloud" ng-click="$parent.show_raport_email_cloud=false">
+                <div class="message-text" ng-click="$parent.show_raport_email_cloud=false">
+                    [[ raporttext ]]
+                </div>
+            </div>
+
+            <form ng-submit="subscribeAdd()">
+
+                <div class="row-form" ng-class="classes.name">
+                    <div class="col-label">
+                        <label>Imię*</label>
+                    </div>
+                    <div class="col-form-control">
+                        <input type="text" name="name" ng-model="data.name" ng-change="checkName()">
+                    </div>
+                </div>
+
+                <div class="row-form" ng-class="classes.surname">
+                    <div class="col-label">
+                        <label>Nazwisko*</label>
+                    </div>
+                    <div class="col-form-control">
+                        <input type="text" name="surname" ng-model="data.surname" ng-change="checkSurname()">
+                    </div>
+                </div>
+
+                <div class="row-form" ng-class="classes.email">
+                    <div class="col-label">
+                        <label>Email*</label>
+                    </div>
+                    <div class="col-form-control">
+                        <input type="text" name="email" ng-model="data.email" ng-change="checkFullEmail()">
+                        <div style="position:absolute; color:#aa0000" ng-if="respdata.status=='exist_subscribe'">[[ respdata.message ]]</div>
+                    </div>
+                </div>
+
+                <div class="row-form row-checkbox" ng-class="classes.reg">
+                    <div class="col-label">
+                        <img
+                                src="/images/checkbox-checked.svg"
+                                class="checkbox-icon"
+                                ng-if="data.reg"
+                                ng-click="data.reg=false"
+                        >
+                        <img
+                                src="/images/checkbox-unchecked.svg"
+                                class="checkbox-icon"
+                                ng-if="!data.reg"
+                                ng-click="data.reg=true"
+                        >
+                    </div>
+                    <div class="col-form-control text-reg" style="padding-top:20px">
+                        Wyrażam zgodę na przetwarzanie moich danych osobowych przez Dom Spotkań z Historią, Karowa 20, 00-324 Warszawa
+                        dla potrzeb wysyłania elektronicznego newslettera Domu Spotkań z Historią.
+                        Dane będą wykorzystane wyłącznie do przekazywania informacji na temat działań DSH
+                        i nie zostaną przekazane podmiotom trzecim .Dane w tym celu przetwarzane będą na podstawie art. 6 ust. 1 lit. a)
+                        Rozporządzenia Parlamentu Europejskiego i Rady (UE) 2016/679 z dnia 27 kwietnia 2016 roku w sprawie ochrony osób fizycznych
+                        w związku z przetwarzaniem danych osobowych i w sprawie swobodnego przepływu takich danych oraz uchylenia dyrektywy 95/46/WE (RODO).
+                        Dane będą przechowywane na czas nieoznaczony. Osoba, której dane dotyczą, ma prawo dostępu do treści swoich danych osobowych oraz prawo ich sprostowania,
+                        usunięcia, ograniczenia przetwarzania, prawo do przenoszenia danych, prawo wniesienia sprzeciwu,
+                        prawo do cofnięcia zgody w dowolnym momencie bez wpływu na zgodność z prawem przetwarzania, którego dokonano na podstawie zgody przed jej cofnięciem.
+                        W celu realizacji uprawnień osoba, której dane dotyczą, możne wysłać stosowną wiadomość e-mail na adres: (Abi@dsh.waw.pl).
+                    </div>
+                </div>
+
+                <div class="row-form">
+                    <div class="col-label">
+
+                    </div>
+                    <div class="col-form-control col-form-button">
+                        <button type="submit" class="btn-save-newsletter">
+                            ZAPISZ SIĘ
+                        </button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>

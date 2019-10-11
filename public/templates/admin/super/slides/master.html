@@ -1,0 +1,53 @@
+<div ng-init="initData()">
+    <div class="row">
+        <div class="col-xs-12 col-sm-4">
+            <div ng-click="newSlide=true; currentSlide=null;" class="lead-s-link">
+                <i class="fa fa-plus-square" aria-hidden="true"></i> Utwórz nowy slide
+            </div>
+        </div>
+    </div>
+  <div class="row"  ng-show="newSlide==true || id>0">
+  <div class="cloud-inside">
+          <div style="position:absolute;
+                    width:15px; height:10px; index-z:100; top:0px; right:0px; top:0vh;"
+               ng-click="closeWin($event)"><span class="glyphicon glyphicon-remove"></span></div><div cloud-carusel-pic></div>
+  </div>
+  </div><br />
+              <div class="row well" ui-sortable ng-model="slides" style="width:90%; margin:auto;
+               font-size:.8em">
+              <div class="row" ng-repeat="slid in slides" style="margin-bottom:10px; background-color:#ffffff">
+                  <div class="col-xs-2">[[slid.title]]</div>
+                  <div class="col-xs-3">[[slid.description]]</div>
+                  <div class="col-xs-2">[[slid.url]]</div>
+                  <div class="col-xs-1" style="background-color:#[[slid.color.rgb]];
+                              text-align:center;
+                              margin-bottom:10px;
+                              color:#ffffff">
+                      [[slid.color.classname]]
+                  </div>
+                  <div class="col-xs-2" style="padding-left:10px">
+                      <img src="/image/[[slid.image]]/pictures/:/100"></div>
+                  <div class="col-xs-2">
+                      <div class="btn btn-primary" ng-click="openEdit(slid.id)">
+                          <span class="glyphicon glyphicon-edit"></span>
+                      </div>
+                      <div class="btn btn-success" ng-show="slid.status==1" ng-click="turnActive(slid)">
+                          <span class="glyphicon glyphicon-ok"></span>
+                      </div>
+                      <div class="btn btn-warning" ng-show="slid.status==0" ng-click="turnActive(slid)">
+                          <span class="glyphicon glyphicon-ban-circle"></span>
+                      </div>
+                      <div class="btn btn-danger" ng-click="confirmRemove(remove,slid,'')">
+                          <span class="glyphicon glyphicon-remove"></span>
+                      </div>
+                  </div>
+          </div>
+    </div>
+    <button
+            type="button"
+            ng-click="saveOrderData()"
+            class="btn btn-warning btn-full-length"
+    >
+        Zapisz kolejność slidów
+    </button>
+</div>

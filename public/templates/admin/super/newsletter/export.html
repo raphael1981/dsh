@@ -1,0 +1,25 @@
+<div class="jumbotron">
+
+
+    <h4>Wybierz status do eksportu</h4>
+
+    <div class="checkbox">
+        <label class="col-xs-12 col-sm-12 col-md-6">
+            <input type="checkbox" ng-model="status.is_unregister"> użytkownik zrezygnował
+        </label>
+        <label class="col-xs-12 col-sm-12 col-md-6">
+            <input type="checkbox" ng-model="status.is_unconfirm"> użytkownik niepotwierdzony
+        </label>
+        <label class="col-xs-12 col-sm-12 col-md-6">
+            <input type="checkbox" ng-model="status.is_confirm"> użytkownik potwierdzony
+        </label>
+    </div>
+
+    <div class="clearfix"></div>
+    <hr>
+
+    <a href="/administrator/export/members/?unregister=[[status.is_unregister]]&unconfirm=[[status.is_unconfirm]]&confirm=[[status.is_confirm]]" class="btn btn-lg btn-primary">
+        Exportuj
+    </a>
+
+</div>

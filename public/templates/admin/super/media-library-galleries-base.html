@@ -1,0 +1,46 @@
+<div class="row">
+    <div class="col-xs-12 col-sm-12">
+        <form class="form-horizontal">
+            <fieldset>
+
+                <!-- Prepended text-->
+                <div class="form-group">
+                    <label class="col-md-4 control-label">Szukaj</label>
+                    <div class="col-md-8">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-search" aria-hidden="true"></i></span>
+                            <input
+                                    name="frase"
+                                    class="form-control"
+                                    placeholder="Szukaj po opisie"
+                                    type="text"
+                                    ng-model="data.frase"
+                                    ng-change="searchPhoto()"
+                            >
+                        </div>
+                    </div>
+                </div>
+
+            </fieldset>
+        </form>
+
+        <div class="row">
+            <div
+                    class="col-xs-12 col-sm-2 col-md-2"
+                    ng-repeat="img in baseimages"
+            >
+                <div class="vertical-view-image">
+                    <img src="[[ img.request_uncomplete ]]300" class="img-responsive center-image">
+                </div>
+                <button
+                        type="button"
+                        class="btn btn-default btn-sm btn-full-length"
+                        ng-click="addImageToGalleryFromLib(img)"
+                >
+                    Dodaj obrazek do galerii
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>

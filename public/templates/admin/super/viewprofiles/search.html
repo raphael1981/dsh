@@ -1,0 +1,14 @@
+<form ng-submit="searchSubmit()">
+    <div class="input-group">
+        <label for="types">Profile dla:</label>
+        <select name="types" id="types"
+                class="form-control"
+                ng-options="option.name for option in entity_types track by option.id"
+                ng-model="current_entity_type"></select>
+    </div>
+</form>
+<hr>
+<button type="button" class="btn btn-primary btn-full-length" ng-click="addNewProfileOpenCloud()">
+    Dodaj profil
+</button>
+<div add-new-view-profile></div>

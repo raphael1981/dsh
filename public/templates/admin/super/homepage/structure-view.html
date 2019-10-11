@@ -1,0 +1,47 @@
+<div class="row">
+
+    <div class="col-xs-12 col-sm-12">
+        <h6>Klucz: [[ find_key ]]</h6>
+    </div>
+
+    <div
+            class="col-xs-12 col-sm-12"
+            ng-repeat="element in colselements"
+            ng-class="col[$index]"
+            ng-init="col[$index]=$parent.viewdata[0].colclass"
+    >
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12">
+
+                <form class="form-inline">
+                    <div class="form-group">
+                        <select class="form-control" id="structure"
+                                ng-options="option.name for option in element.showtype track by option.key"
+                                ng-model="types[$index]"
+                                ng-init="types[$index]=element.showtype[0]"
+                        ></select>
+                    </div>
+                    <div class="form-group">
+
+                        <button
+                                type="button"
+                                class="btn btn-default"
+                                ng-click="openConfigCloud($index, types[$index], element, find_key)"
+                        >
+                            Konfiguruj element
+                        </button>
+                    </div>
+                </form>
+
+
+
+            </div>
+        </div>
+
+
+
+        </div>
+
+    </div>
+</div>

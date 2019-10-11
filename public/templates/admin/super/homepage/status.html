@@ -1,0 +1,14 @@
+<button
+        class="btn btn-danger"
+        ng-if="status==0"
+        ng-click="changeData('active',1, id, 0)"
+>
+    <i class="fa fa-ban" aria-hidden="true"></i>
+</button>
+
+<button
+        class="btn btn-success"
+        ng-if="status==1"
+>
+    <i class="fa fa-check" aria-hidden="true"></i>
+</button>

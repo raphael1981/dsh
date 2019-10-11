@@ -1,0 +1,39 @@
+<div class="row" ng-init="initData()">
+    <div class="col-xs-12 col-sm-12 col-md-12">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-5">
+                <div tree-view="structure" tree-view-options="options"></div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-7">
+                <div ng-if="viewtype=='folder'">
+                    <div class="row">
+                        <div
+                                class="col-xs-12 col-sm-12 col-md-3"
+                                ng-repeat="file in folderfiles[0]"
+
+                        >
+                            <img
+                                    src="[[ file.request ]]"
+                                    class="img-responsive"
+
+                            >
+                        </div>
+                    </div>
+                </div>
+
+                <div ng-if="viewtype=='file'">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-3">
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+

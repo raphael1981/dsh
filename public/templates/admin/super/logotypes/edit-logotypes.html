@@ -1,0 +1,87 @@
+<div class="row" ng-init="initData()">
+    <div class="col-md-2">
+        <div
+                ngf-drop
+                ng-model="file"
+                ngf-drag-over-class="dragover"
+                ngf-multiple="false"
+                ngf-allow-dir="true"
+                accept="image/*"
+                class="drop-box">
+
+        </div>
+
+
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: [[ progress ]]%;">
+                [[ progress ]]%
+            </div>
+        </div>
+    </div>
+    <div class="col-md-10">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row form-group" ng-class="classes.name">
+                    <div class="col-md-3">
+                        <label class="control-label">
+                            Nazwa w panelu
+                        </label>
+                    </div>
+                    <div class="col-md-9">
+                        <input type="text" ng-model="data.name" class="form-control" ng-change="checkName()">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <hr>
+                    </div>
+                </div>
+                <div class="row form-group" ng-class="classes.rotor_title">
+                    <div class="col-md-3">
+                        <label class="control-label">
+                            Nagłówek rotora
+                        </label>
+                    </div>
+                    <div class="col-md-9">
+                        <input type="text" ng-model="data.rotor_title" class="form-control" ng-change="checkRotorTitle()">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <hr>
+            </div>
+        </div>
+
+        <div class="row" ui-sortable ng-model="lcollection">
+
+            <div
+                    class="col-xs-12 col-sm-12 col-sort-view"
+                    ng-repeat="lg in lcollection">
+
+
+                <div class="row">
+                    <div class="col-md-2">
+                        <img src="[[ lg.logo_uri ]]" class="img-responsive">
+                    </div>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" ng-model="lcollection[$index].link">
+                    </div>
+                    <div class="col-md-1">
+                        <button type="button" class="btn btn-danger" ng-click="removeLogo($index)"><i class="fa fa-remove"></i></button>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+
+        <button type="button" class="btn btn-full-length btn-primary" ng-click="updateLogotypes()">Zapisz zmiany</button>
+        <hr>
+
+    </div>
+</div>

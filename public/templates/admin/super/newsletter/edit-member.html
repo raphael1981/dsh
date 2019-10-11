@@ -1,0 +1,38 @@
+<div class="row" ng-init="initData()">
+    <div class="col-xs-12 col-sm-12 col-md-3">
+        <div show-search-criteria></div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-9">
+
+        <div
+                class="row"
+                ng-repeat="el in elements"
+        >
+
+            <div class="col-xs-12 col-sm-12 col-md-6" ng-init="basename[$index]=el.name">
+                [[ e.email ]]
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-3">
+
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-1">
+
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-2">
+                <div delete-element id="[[ el.id ]]"></div>
+            </div>
+
+            <div class="col-xs-12 col-sm-12">
+                <hr>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+<div show-pagination-route></div>
+
